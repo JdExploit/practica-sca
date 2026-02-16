@@ -1,13 +1,18 @@
-# Dockerfile para aplicación Django vulnerable
-FROM python:2.7-slim
+FROM python:2.7-slim-buster
+
+# Configurar repositorios archive (versión corregida)
+RUN sed -i 's/deb.debian.org/archive.debian.org/g' /etc/apt/sources.list && \
+    sed -i 's/security.debian.org/archive.debian.org/g' /etc/apt/sources.list && \
+    sed -i '/httpredir.debian.org/d' /etc/apt/sources.list
 
 # Variables de entorno
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 ENV DJANGO_SETTINGS_MODULE mysite.settings
 
-# Instalar dependencias del sistema
-RUN apt-get update && apt-get install -y \
+# Actualizar e instalar dependencias (comandos separados)
+RUN apt-get update -o Acquire::Check-Valid-Until=false && \
+    apt-get install -y \
     curl \
     nodejs \
     npm \
@@ -21,7 +26,7 @@ RUN npm install -g retire
 # Crear directorio de trabajo
 WORKDIR /app
 
-# Copiar requirements primero (para mejor cacheo)
+# Copiar requirements
 COPY requirements.txt /app/
 COPY requirements-safe.txt /app/
 

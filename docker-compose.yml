@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  web-vulnerable:
+    build: .
+    container_name: django-vulnerable
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./app:/app/app
+      - ./reports:/app/reports
+    command: >
+      sh -c "python app/manage.py migrate &&
+             python app/manage.py runserver 0.0.0.0:8000"
+    
+  scanner:
+    image: python:3.9-slim
+    container_name: vulnerability-scanner
+    volumes:
+      - ./:/workspace
+      - ./reports:/reports
+    working_dir: /workspace
+    command: >
+      sh -c "apt-get update && 
+             apt-get install -y nodejs npm &&
+             pip install safety bandit &&
+             npm install -g retire &&
+             bash /workspace/scripts/scan.sh"
+    depends_on:
+      - web-vulnerable

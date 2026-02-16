@@ -1,0 +1,12 @@
+# Versiones actualizadas y seguras
+Django==4.2.7
+django-crispy-forms==2.1
+Pillow==10.1.0
+requests==2.31.0
+urllib3==2.1.0
+pyyaml==6.0.1
+sqlparse==0.4.4
+django-filter==23.5
+djangorestframework==3.14.0
+markupsafe==2.1.3
+jinja2==3.1.2

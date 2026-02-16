@@ -1,7 +1,6 @@
-# Etapa 1: Aplicación vulnerable (Python 2.7)
-FROM python:2.7-slim-buster as app-vulnerable
+FROM python:2.7-slim-buster
 
-# Desactivar comprobación de fecha
+# Desactivar comprobación de fecha de los repositorios
 RUN echo "Acquire::Check-Valid-Until false;" > /etc/apt/apt.conf.d/99no-check-valid-until
 
 # Configurar repositorios archive
@@ -14,32 +13,7 @@ ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 ENV DJANGO_SETTINGS_MODULE mysite.settings
 
-# Instalar dependencias mínimas
-RUN apt-get update && apt-get install -y \
-    curl \
-    nodejs \
-    npm \
-    && rm -rf /var/lib/apt/lists/*
-
-# Instalar Retire.js (para JS)
-RUN npm install -g retire
-
-WORKDIR /app
-
-COPY requirements.txt /app/
-COPY requirements-safe.txt /app/
-
-RUN pip install -r requirements.txt
-
-COPY . /app/
-
-EXPOSE 8000
-
-CMD ["python", "app/manage.py", "runserver", "0.0.0.0:8000"]
-
-# Etapa 2: Herramientas de análisis (Python 3.9)
-FROM python:3.9-slim as scanner
-
+# Instalar dependencias del sistema
 RUN apt-get update && apt-get install -y \
     curl \
     nodejs \
@@ -47,14 +21,31 @@ RUN apt-get update && apt-get install -y \
     git \
     && rm -rf /var/lib/apt/lists/*
 
-# Instalar herramientas de análisis en Python 3.9
-RUN pip install safety bandit
+# Instalar herramientas de análisis compatibles
+RUN pip install safety==2.3.5
+
+# Instalar Retire.js
 RUN npm install -g retire
 
-WORKDIR /workspace
+# Crear directorio de trabajo
+WORKDIR /app
 
-COPY requirements.txt /workspace/
-COPY requirements-safe.txt /workspace/
-COPY scripts/scan.sh /workspace/scripts/
+# Copiar requirements.txt primero (para mejor caché)
+COPY requirements.txt /app/
+COPY requirements-safe.txt /app/
 
-CMD ["bash", "/workspace/scripts/scan.sh"]
+# Instalar dependencias - con verificación
+RUN pip install --no-cache-dir -r requirements.txt && \
+    python -c "import django; print(f'Django {django.get_version()} installed successfully')"
+
+# Copiar el resto del código
+COPY . /app/
+
+# Verificar que Django está instalado
+RUN python -c "import django; print('Django OK')"
+
+# Exponer puerto
+EXPOSE 8000
+
+# Comando por defecto
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]

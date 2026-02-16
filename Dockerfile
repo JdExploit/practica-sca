@@ -21,8 +21,8 @@ RUN apt-get update && apt-get install -y \
     git \
     && rm -rf /var/lib/apt/lists/*
 
-# Instalar herramientas de análisis compatibles
-RUN pip install safety==2.3.5
+# Instalar una versión de safety compatible con Python 2.7
+RUN pip install safety==1.10.3
 
 # Instalar Retire.js
 RUN npm install -g retire
@@ -30,19 +30,18 @@ RUN npm install -g retire
 # Crear directorio de trabajo
 WORKDIR /app
 
-# Copiar requirements.txt primero (para mejor caché)
+# Copiar requirements.txt
 COPY requirements.txt /app/
 COPY requirements-safe.txt /app/
 
-# Instalar dependencias - con verificación
-RUN pip install --no-cache-dir -r requirements.txt && \
-    python -c "import django; print(f'Django {django.get_version()} installed successfully')"
+# Instalar dependencias del proyecto
+RUN pip install --no-cache-dir -r requirements.txt
 
 # Copiar el resto del código
 COPY . /app/
 
-# Verificar que Django está instalado
-RUN python -c "import django; print('Django OK')"
+# Verificar instalación
+RUN python -c "import django; print('Django installed: {}'.format(django.get_version()))"
 
 # Exponer puerto
 EXPOSE 8000

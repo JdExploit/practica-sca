@@ -1,43 +1,60 @@
-FROM python:2.7-slim-buster
+# Etapa 1: Aplicación vulnerable (Python 2.7)
+FROM python:2.7-slim-buster as app-vulnerable
 
-# Configurar repositorios archive (versión corregida)
-RUN sed -i 's/deb.debian.org/archive.debian.org/g' /etc/apt/sources.list && \
-    sed -i 's/security.debian.org/archive.debian.org/g' /etc/apt/sources.list && \
-    sed -i '/httpredir.debian.org/d' /etc/apt/sources.list
+# Desactivar comprobación de fecha
+RUN echo "Acquire::Check-Valid-Until false;" > /etc/apt/apt.conf.d/99no-check-valid-until
+
+# Configurar repositorios archive
+RUN echo "deb http://archive.debian.org/debian/ buster main contrib non-free" > /etc/apt/sources.list && \
+    echo "deb http://archive.debian.org/debian/ buster-updates main contrib non-free" >> /etc/apt/sources.list && \
+    echo "deb http://archive.debian.org/debian-security/ buster/updates main contrib non-free" >> /etc/apt/sources.list
 
 # Variables de entorno
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 ENV DJANGO_SETTINGS_MODULE mysite.settings
 
-# Actualizar e instalar dependencias (comandos separados)
-RUN apt-get update -o Acquire::Check-Valid-Until=false && \
-    apt-get install -y \
+# Instalar dependencias mínimas
+RUN apt-get update && apt-get install -y \
+    curl \
+    nodejs \
+    npm \
+    && rm -rf /var/lib/apt/lists/*
+
+# Instalar Retire.js (para JS)
+RUN npm install -g retire
+
+WORKDIR /app
+
+COPY requirements.txt /app/
+COPY requirements-safe.txt /app/
+
+RUN pip install -r requirements.txt
+
+COPY . /app/
+
+EXPOSE 8000
+
+CMD ["python", "app/manage.py", "runserver", "0.0.0.0:8000"]
+
+# Etapa 2: Herramientas de análisis (Python 3.9)
+FROM python:3.9-slim as scanner
+
+RUN apt-get update && apt-get install -y \
     curl \
     nodejs \
     npm \
     git \
     && rm -rf /var/lib/apt/lists/*
 
-# Instalar herramientas de análisis
+# Instalar herramientas de análisis en Python 3.9
 RUN pip install safety bandit
 RUN npm install -g retire
 
-# Crear directorio de trabajo
-WORKDIR /app
+WORKDIR /workspace
 
-# Copiar requirements
-COPY requirements.txt /app/
-COPY requirements-safe.txt /app/
+COPY requirements.txt /workspace/
+COPY requirements-safe.txt /workspace/
+COPY scripts/scan.sh /workspace/scripts/
 
-# Instalar dependencias vulnerables
-RUN pip install -r requirements.txt
-
-# Copiar el resto del código
-COPY . /app/
-
-# Exponer puerto
-EXPOSE 8000
-
-# Comando por defecto
-CMD ["python", "app/manage.py", "runserver", "0.0.0.0:8000"]
+CMD ["bash", "/workspace/scripts/scan.sh"]

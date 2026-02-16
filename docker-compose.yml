@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   web-vulnerable:
     build: .
@@ -9,6 +7,7 @@ services:
     volumes:
       - ./app:/app/app
       - ./reports:/app/reports
+    working_dir: /app
     command: >
       sh -c "python app/manage.py migrate &&
              python app/manage.py runserver 0.0.0.0:8000"

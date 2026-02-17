@@ -1,0 +1,1723 @@
+
+
+[33m[1m+===========================================================================================================================================================================================+[0m
+
+
+[31m[1mDEPRECATED: [0m[33m[1mthis command (`check`) has been DEPRECATED, and will be unsupported beyond 01 June 2024.[0m
+
+
+[32mWe highly encourage switching to the new [0m[32m[1m`scan`[0m[32m command which is easier to use, more powerful, and can be set up to mimic the deprecated command if required.[0m
+
+
+[33m[1m+===========================================================================================================================================================================================+[0m
+
+
++==============================================================================+
+
+                               /$$$$$$            /$$
+                              /$$__  $$          | $$
+           /$$$$$$$  /$$$$$$ | $$  \__//$$$$$$  /$$$$$$   /$$   /$$
+          /$$_____/ |____  $$| $$$$   /$$__  $$|_  $$_/  | $$  | $$
+         |  $$$$$$   /$$$$$$$| $$_/  | $$$$$$$$  | $$    | $$  | $$
+          \____  $$ /$$__  $$| $$    | $$_____/  | $$ /$$| $$  | $$
+          /$$$$$$$/|  $$$$$$$| $$    |  $$$$$$$  |  $$$$/|  $$$$$$$
+         |_______/  \_______/|__/     \_______/   \___/   \____  $$
+                                                          /$$  | $$
+                                                         |  $$$$$$/
+  by safetycli.com                                        \______/
+
++==============================================================================+
+
+ [1mREPORT[0m 
+
+  Safety [1mv3.7.0[0m is scanning for [1mVulnerabilities[0m[1m...[0m
+[1m  Scanning dependencies[0m in your [1mfiles:[0m
+
+  -> requirements.txt
+
+  Using [1mopen-source vulnerability database[0m
+[1m  Found and scanned 11 packages[0m
+  Timestamp [1m2026-02-16 23:48:30[0m
+[1m  106[0m[1m vulnerabilities reported[0m
+[1m  0[0m[1m vulnerabilities ignored[0m
+
++==============================================================================+
+ [1mVULNERABILITIES REPORTED[0m 
++==============================================================================+
+
+[31m-> Vulnerability found in jinja2 version 2.10.1[0m
+[1m   Vulnerability ID: [0m76378
+[1m   Affected spec: [0m<3.1.5
+[1m   ADVISORY: [0mAn oversight in how the Jinja sandboxed environment
+   detects calls to str.format allows an attacker who controls the content of
+   a template to execute arbitrary Python code. To exploit the vulnerability,
+   an attacker needs to control the content of a template. Whether that is
+   the case depends on the type of application using Jinja. This
+   vulnerability impacts users of applications which execute untrusted
+   templates. Jinja's sandbox does catch calls to str.format and ensures they
+   don't escape the sandbox. However, it's possible to store a reference to a
+   malicious string's format method, then pass that to a filter that calls
+   it. No such filters are built-in to Jinja, but could be present through
+   custom filters in an application. After the fix, such indirect calls are
+   also handled by the sandbox.
+[1m   CVE-2024-56326[0m
+[1m   For more information about this vulnerability, visit
+   [0mhttps://data.safetycli.com/v/76378/97c[0m
+   To ignore this vulnerability, use PyUp vulnerability id 76378 in safety’s
+   ignore command-line argument or add the ignore to your safety policy file.
+
+
+[31m-> Vulnerability found in jinja2 version 2.10.1[0m
+[1m   Vulnerability ID: [0m71591
+[1m   Affected spec: [0m<3.1.4
+[1m   ADVISORY: [0mJinja is an extensible templating engine. The `xmlattr`
+   filter in affected versions of Jinja accepts keys containing non-attribute
+   characters. XML/HTML attributes cannot contain spaces, `/`, `>`, or `=`,
+   as each would then be interpreted as starting a separate attribute. If an
+   application accepts keys (as opposed to only values) as user input, and
+   renders these in pages that other users see as well, an attacker could use
+   this to inject other attributes and perform XSS. The fix for
+   CVE-2024-22195 only addressed spaces but not other characters. Accepting
+   keys as user input is now explicitly considered an unintended use case of
+   the `xmlattr` filter, and code that does so without otherwise validating
+   the input should be flagged as insecure, regardless of Jinja version.
+   Accepting _values_ as user input continues to be safe.
+[1m   CVE-2024-34064[0m
+[1m   For more information about this vulnerability, visit
+   [0mhttps://data.safetycli.com/v/71591/97c[0m
+   To ignore this vulnerability, use PyUp vulnerability id 71591 in safety’s
+   ignore command-line argument or add the ignore to your safety policy file.
+
+
+[31m-> Vulnerability found in jinja2 version 2.10.1[0m
+[1m   Vulnerability ID: [0m75976
+[1m   Affected spec: [0m<3.1.6
+[1m   ADVISORY: [0mPrior to 3.1.6, an oversight in how the Jinja sandboxed
+   environment interacts with the |attr filter allows an attacker that
+   controls the content of a template to execute arbitrary Python code. To
+   exploit the vulnerability, an attacker needs to control the content of a
+   template. Whether that is the case depends on the type of application
+   using Jinja. This vulnerability impacts users of applications which
+   execute untrusted templates. Jinja's sandbox does catch calls to
+   str.format and ensures they don't escape the sandbox. However, it's
+   possible to use the |attr filter to get a reference to a string's plain
+   format method, bypassing the sandbox. After the fix, the |attr filter no
+   longer bypasses the environment's attribute lookup. This vulnerability is
+   fixed in 3.1.6.
+[1m   CVE-2025-27516[0m
+[1m   For more information about this vulnerability, visit
+   [0mhttps://data.safetycli.com/v/75976/97c[0m
+   To ignore this vulnerability, use PyUp vulnerability id 75976 in safety’s
+   ignore command-line argument or add the ignore to your safety policy file.
+
+
+[31m-> Vulnerability found in jinja2 version 2.10.1[0m
+[1m   Vulnerability ID: [0m64227
+[1m   Affected spec: [0m<3.1.3
+[1m   ADVISORY: [0mJinja is an extensible templating engine. Special
+   placeholders in the template allow writing code similar to Python syntax.
+   It is possible to inject arbitrary HTML attributes into the rendered HTML
+   template, potentially leading to Cross-Site Scripting (XSS). The Jinja
+   `xmlattr` filter can be abused to inject arbitrary HTML attribute keys and
+   values, bypassing the auto escaping mechanism and potentially leading to
+   XSS. It may also be possible to bypass attribute validation checks if they
+   are blacklist-based.
+[1m   CVE-2024-22195[0m
+[1m   For more information about this vulnerability, visit
+   [0mhttps://data.safetycli.com/v/64227/97c[0m
+   To ignore this vulnerability, use PyUp vulnerability id 64227 in safety’s
+   ignore command-line argument or add the ignore to your safety policy file.
+
+
+[31m-> Vulnerability found in jinja2 version 2.10.1[0m
+[1m   Vulnerability ID: [0m39525
+[1m   Affected spec: [0m<2.11.3
+[1m   ADVISORY: [0mThis affects the package jinja2 from 0.0.0 and before
+   2.11.3. The ReDoS vulnerability is mainly due to the '_punctuation_re
+   regex' operator and its use of multiple wildcards. The last wildcard is
+   the most exploitable as it searches for trailing punctuation. This issue
+   can be mitigated by Markdown to format user content instead of the urlize
+   filter, or by implementing request timeouts and limiting process memory.
+[1m   CVE-2020-28493[0m
+[1m   For more information about this vulnerability, visit
+   [0mhttps://data.safetycli.com/v/39525/97c[0m
+   To ignore this vulnerability, use PyUp vulnerability id 39525 in safety’s
+   ignore command-line argument or add the ignore to your safety policy file.
+
+
+[31m-> Vulnerability found in djangorestframework version 3.9.4[0m
+[1m   Vulnerability ID: [0m71849
+[1m   Affected spec: [0m<3.15.2
+[1m   ADVISORY: [0mAffected versions of the package djangorestframework are
+   vulnerable to Cross-site Scripting (XSS) via the break_long_headers
+   template filter due to improper input sanitization before splitting and
+   joining with <br> tags.
+[1m   CVE-2024-21520[0m
+[1m   For more information about this vulnerability, visit
+   [0mhttps://data.safetycli.com/v/71849/97c[0m
+   To ignore this vulnerability, use PyUp vulnerability id 71849 in safety’s
+   ignore command-line argument or add the ignore to your safety policy file.
+
+
+[31m-> Vulnerability found in djangorestframework version 3.9.4[0m
+[1m   Vulnerability ID: [0m38841
+[1m   Affected spec: [0m<3.11.2
+[1m   ADVISORY: [0mA flaw was found in Django REST Framework versions
+   before 3.12.0 and before 3.11.2. When using the browseable API viewer,
+   Django REST Framework fails to properly escape certain strings that can
+   come from user input. This allows a user who can control those strings to
+   inject malicious <script> tags, leading to a cross-site-scripting (XSS)
+   vulnerability.
+[1m   CVE-2020-25626[0m
+[1m   For more information about this vulnerability, visit
+   [0mhttps://data.safetycli.com/v/38841/97c[0m
+   To ignore this vulnerability, use PyUp vulnerability id 38841 in safety’s
+   ignore command-line argument or add the ignore to your safety policy file.
+
+
+[31m-> Vulnerability found in django-filter version 1.1.0[0m
+[1m   Vulnerability ID: [0m40317
+[1m   Affected spec: [0m<2.4.0
+[1m   ADVISORY: [0mDjango-filter 2.4.0 includes a fix for CVE-2020-15225:
+   In django-filter before version 2.4.0, automatically generated
+   'NumberFilter' instances, whose value was later converted to an integer,
+   were subject to potential DoS from maliciously input using exponential
+   format with sufficiently large exponents. Version 2.4.0+ applies a
+   'MaxValueValidator' with a a default 'limit_value' of 1e50 to the form
+   field used by 'NumberFilter' instances. In addition, 'NumberFilter'
+   implements the new 'get_max_validator()' which should return a configured
+   validator instance to customise the limit, or else 'None' to disable the
+   additional validation. Users may manually apply an equivalent validator if
+   they are not able to upgrade.https://github.com/carltongibson/django-
+   filter/security/advisories/GHSA-x7gm-rfgv-w973
+[1m   CVE-2020-15225[0m
+[1m   For more information about this vulnerability, visit
+   [0mhttps://data.safetycli.com/v/40317/97c[0m
+   To ignore this vulnerability, use PyUp vulnerability id 40317 in safety’s
+   ignore command-line argument or add the ignore to your safety policy file.
+
+
+[31m-> Vulnerability found in sqlparse version 0.2.4[0m
+[1m   Vulnerability ID: [0m82038
+[1m   Affected spec: [0m<0.5.4
+[1m   ADVISORY: [0mAffected versions of this package are vulnerable to
+   Denial of Service (DoS) attacks due to Algorithmic Complexity. The SQL
+   parser fails to enforce limits when processing deeply nested tuples and
+   large token sequences, leading to excessive resource consumption through
+   crafted SQL statements with extreme nesting depth or token
+   counts.**Note:** This issue is due to an incomplete fix for CVE-2024-4340.
+[1m   PVE-2025-82038[0m
+[1m   For more information about this vulnerability, visit
+   [0mhttps://data.safetycli.com/v/82038/97c[0m
+   To ignore this vulnerability, use PyUp vulnerability id 82038 in safety’s
+   ignore command-line argument or add the ignore to your safety policy file.
+
+
+[31m-> Vulnerability found in sqlparse version 0.2.4[0m
+[1m   Vulnerability ID: [0m55054
+[1m   Affected spec: [0m>=0.1.15,<0.4.4
+[1m   ADVISORY: [0mSqlparse 0.4.4 includes a fix for CVE-2023-30608: Parser
+   contains a regular expression that is vulnerable to ReDOS (Regular
+   Expression Denial of Service).https://github.com/andialbrecht/sqlparse/sec
+   urity/advisories/GHSA-rrm6-wvj7-cwh2
+[1m   CVE-2023-30608[0m
+[1m   For more information about this vulnerability, visit
+   [0mhttps://data.safetycli.com/v/55054/97c[0m
+   To ignore this vulnerability, use PyUp vulnerability id 55054 in safety’s
+   ignore command-line argument or add the ignore to your safety policy file.
+
+
+[31m-> Vulnerability found in sqlparse version 0.2.4[0m
+[1m   Vulnerability ID: [0m67887
+[1m   Affected spec: [0m<0.5.0
+[1m   ADVISORY: [0mSqlparse 0.5.0 addresses a potential denial of service
+   (DoS) vulnerability related to recursion errors in deeply nested SQL
+   statements. To mitigate this issue, the update replaces recursion errors
+   with a general SQLParseError, improving the resilience and stability of
+   the parsing process.
+[1m   CVE-2024-4340[0m
+[1m   For more information about this vulnerability, visit
+   [0mhttps://data.safetycli.com/v/67887/97c[0m
+   To ignore this vulnerability, use PyUp vulnerability id 67887 in safety’s
+   ignore command-line argument or add the ignore to your safety policy file.
+
+
+[31m-> Vulnerability found in pyyaml version 4.2b1[0m
+[1m   Vulnerability ID: [0m38100
+[1m   Affected spec: [0m<5.3.1
+[1m   ADVISORY: [0mPyyaml 5.3.1 includes a fix for CVE-2020-1747: A
+   vulnerability was discovered in the PyYAML library in versions before
+   5.3.1, where it is susceptible to arbitrary code execution when it
+   processes untrusted YAML files through the full_load method or with the
+   FullLoader loader. Applications that use the library to process untrusted
+   input may be vulnerable to this flaw. An attacker could use this flaw to
+   execute arbitrary code on the system by abusing the python/object/new
+   constructor.
+[1m   CVE-2020-1747[0m
+[1m   For more information about this vulnerability, visit
+   [0mhttps://data.safetycli.com/v/38100/97c[0m
+   To ignore this vulnerability, use PyUp vulnerability id 38100 in safety’s
+   ignore command-line argument or add the ignore to your safety policy file.
+
+
+[31m-> Vulnerability found in pyyaml version 4.2b1[0m
+[1m   Vulnerability ID: [0m39611
+[1m   Affected spec: [0m<5.4
+[1m   ADVISORY: [0mPyyaml version 5.4 includes a fix for CVE-2020-14343: A
+   vulnerability was discovered in the PyYAML library in versions before 5.4,
+   where it is susceptible to arbitrary code execution when it processes
+   untrusted YAML files through the full_load method or with the FullLoader
+   loader. Applications that use the library to process untrusted input may
+   be vulnerable to this flaw. This flaw allows an attacker to execute
+   arbitrary code on the system by abusing the python/object/new constructor.
+   This flaw is due to an incomplete fix for
+   CVE-2020-1747.https://bugzilla.redhat.com/show_bug.cgi?id=1860466
+[1m   CVE-2020-14343[0m
+[1m   For more information about this vulnerability, visit
+   [0mhttps://data.safetycli.com/v/39611/97c[0m
+   To ignore this vulnerability, use PyUp vulnerability id 39611 in safety’s
+   ignore command-line argument or add the ignore to your safety policy file.
+
+
+[31m-> Vulnerability found in urllib3 version 1.24.3[0m
+[1m   Vulnerability ID: [0m84031
+[1m   Affected spec: [0m>=1.22,<2.6.3
+[1m   ADVISORY: [0mAffected versions of the urllib3 package are vulnerable
+   to Denial of Service (DoS) due to redirect handling that drains
+   connections by decompressing redirect response bodies without enforcing
+   streaming read limits. The issue occurs when using urllib3’s streaming
+   mode (for example, preload_content=False) while allowing redirects,
+   because urllib3.response.HTTPResponse.drain_conn() would call
+   HTTPResponse.read() in a way that decoded/decompressed the entire redirect
+   response body even before any streaming reads were performed, effectively
+   bypassing decompression-bomb safeguards.
+[1m   CVE-2026-21441[0m
+[1m   For more information about this vulnerability, visit
+   [0mhttps://data.safetycli.com/v/84031/97c[0m
+   To ignore this vulnerability, use PyUp vulnerability id 84031 in safety’s
+   ignore command-line argument or add the ignore to your safety policy file.
+
+
+[31m-> Vulnerability found in urllib3 version 1.24.3[0m
+[1m   Vulnerability ID: [0m71608
+[1m   Affected spec: [0m<=1.26.18
+[1m   ADVISORY: [0mUrllib3's ProxyManager ensures that the Proxy-
+   Authorization header is correctly directed only to configured proxies.
+   However, when HTTP requests bypass urllib3's proxy support, there's a risk
+   of inadvertently setting the Proxy-Authorization header, which remains
+   ineffective without a forwarding or tunneling proxy. Urllib3 does not
+   recognize this header as carrying authentication data, failing to remove
+   it during cross-origin redirects. While this scenario is uncommon and
+   poses low risk to most users, urllib3 now proactively removes the Proxy-
+   Authorization header during cross-origin redirects as a precautionary
+   measure. Users are advised to utilize urllib3's proxy support or disable
+   automatic redirects to handle the Proxy-Authorization header securely.
+   Despite these precautions, urllib3 defaults to stripping the header to
+   safeguard users who may inadvertently misconfigure requests.
+[1m   CVE-2024-37891[0m
+[1m   For more information about this vulnerability, visit
+   [0mhttps://data.safetycli.com/v/71608/97c[0m
+   To ignore this vulnerability, use PyUp vulnerability id 71608 in safety’s
+   ignore command-line argument or add the ignore to your safety policy file.
+
+
+[31m-> Vulnerability found in urllib3 version 1.24.3[0m
+[1m   Vulnerability ID: [0m82331
+[1m   Affected spec: [0m>=1.24,<2.6.0
+[1m   ADVISORY: [0mAffected versions of the urllib3 package are vulnerable
+   to Denial of Service (DoS) due to allowing an unbounded number of content-
+   encoding decompression steps for HTTP responses. The HTTPResponse content
+   decoding pipeline in urllib3 follows the Content-Encoding header and
+   applies each advertised compression algorithm in sequence without
+   enforcing a maximum chain length or effective output size, so a malicious
+   peer can send a response with a very long encoding chain that triggers
+   excessive CPU use and massive memory allocation during decompression.
+[1m   CVE-2025-66418[0m
+[1m   For more information about this vulnerability, visit
+   [0mhttps://data.safetycli.com/v/82331/97c[0m
+   To ignore this vulnerability, use PyUp vulnerability id 82331 in safety’s
+   ignore command-line argument or add the ignore to your safety policy file.
+
+
+[31m-> Vulnerability found in urllib3 version 1.24.3[0m
+[1m   Vulnerability ID: [0m61893
+[1m   Affected spec: [0m<1.26.18
+[1m   ADVISORY: [0mAffected versions of urllib3 are vulnerable to an HTTP
+   redirect handling vulnerability that fails to remove the HTTP request body
+   when a POST changes to a GET via 301, 302, or 303 responses. This flaw can
+   expose sensitive request data if the origin service is compromised and
+   redirects to a malicious endpoint, though exploitability is low when no
+   sensitive data is used. The vulnerability affects automatic redirect
+   behavior. It is fixed in versions 1.26.18 and 2.0.7; update or disable
+   redirects using redirects=False.This vulnerability is specific to Python's
+   urllib3 library.
+[1m   CVE-2023-45803[0m
+[1m   For more information about this vulnerability, visit
+   [0mhttps://data.safetycli.com/v/61893/97c[0m
+   To ignore this vulnerability, use PyUp vulnerability id 61893 in safety’s
+   ignore command-line argument or add the ignore to your safety policy file.
+
+
+[31m-> Vulnerability found in urllib3 version 1.24.3[0m
+[1m   Vulnerability ID: [0m61601
+[1m   Affected spec: [0m<1.26.17
+[1m   ADVISORY: [0mUrllib3 1.26.17 and 2.0.5 include a fix for
+   CVE-2023-43804: Urllib3 doesn't treat the 'Cookie' HTTP header special or
+   provide any helpers for managing cookies over HTTP, that is the
+   responsibility of the user. However, it is possible for a user to specify
+   a 'Cookie' header and unknowingly leak information via HTTP redirects to a
+   different origin if that user doesn't disable redirects explicitly.https:/
+   /github.com/urllib3/urllib3/security/advisories/GHSA-v845-jxx5-vc9f
+[1m   CVE-2023-43804[0m
+[1m   For more information about this vulnerability, visit
+   [0mhttps://data.safetycli.com/v/61601/97c[0m
+   To ignore this vulnerability, use PyUp vulnerability id 61601 in safety’s
+   ignore command-line argument or add the ignore to your safety policy file.
+
+
+[31m-> Vulnerability found in urllib3 version 1.24.3[0m
+[1m   Vulnerability ID: [0m77744
+[1m   Affected spec: [0m<2.5.0
+[1m   ADVISORY: [0murllib3 is a user-friendly HTTP client library for
+   Python. Prior to 2.5.0, it is possible to disable redirects for all
+   requests by instantiating a PoolManager and specifying retries in a way
+   that disable redirects. By default, requests and botocore users are not
+   affected. An application attempting to mitigate SSRF or open redirect
+   vulnerabilities by disabling redirects at the PoolManager level will
+   remain vulnerable. This issue has been patched in version 2.5.0.
+[1m   CVE-2025-50181[0m
+[1m   For more information about this vulnerability, visit
+   [0mhttps://data.safetycli.com/v/77744/97c[0m
+   To ignore this vulnerability, use PyUp vulnerability id 77744 in safety’s
+   ignore command-line argument or add the ignore to your safety policy file.
+
+
+[31m-> Vulnerability found in urllib3 version 1.24.3[0m
+[1m   Vulnerability ID: [0m82332
+[1m   Affected spec: [0m>=1.0,<2.6.0
+[1m   ADVISORY: [0mAffected versions of the urllib3 package are vulnerable
+   to Denial of Service (DoS) due to improper handling of highly compressed
+   HTTP response bodies during streaming decompression. The
+   urllib3.HTTPResponse methods stream(), read(), read1(), read_chunked(),
+   and readinto() may fully decompress a minimal but highly compressed
+   payload based on the Content-Encoding header into an internal buffer
+   instead of limiting the decompressed output to the requested chunk size,
+   causing excessive CPU usage and massive memory allocation on the client
+   side.
+[1m   CVE-2025-66471[0m
+[1m   For more information about this vulnerability, visit
+   [0mhttps://data.safetycli.com/v/82332/97c[0m
+   To ignore this vulnerability, use PyUp vulnerability id 82332 in safety’s
+   ignore command-line argument or add the ignore to your safety policy file.
+
+
+[31m-> Vulnerability found in urllib3 version 1.24.3[0m
+[1m   Vulnerability ID: [0m38834
+[1m   Affected spec: [0m<1.25.9
+[1m   ADVISORY: [0mUrllib3 1.25.9 includes a fix for CVE-2020-26137:
+   Urllib3 before 1.25.9 allows CRLF injection if the attacker controls the
+   HTTP request method, as demonstrated by inserting CR and LF control
+   characters in the first argument of putrequest(). NOTE: this is similar to
+   CVE-2020-26116.https://github.com/python/cpython/issues/83784https://githu
+   b.com/urllib3/urllib3/pull/1800
+[1m   CVE-2020-26137[0m
+[1m   For more information about this vulnerability, visit
+   [0mhttps://data.safetycli.com/v/38834/97c[0m
+   To ignore this vulnerability, use PyUp vulnerability id 38834 in safety’s
+   ignore command-line argument or add the ignore to your safety policy file.
+
+
+[31m-> Vulnerability found in urllib3 version 1.24.3[0m
+[1m   Vulnerability ID: [0m43975
+[1m   Affected spec: [0m<1.26.5
+[1m   ADVISORY: [0mUrllib3 1.26.5 includes a fix for CVE-2021-33503: When
+   provided with a URL containing many @ characters in the authority
+   component, the authority regular expression exhibits catastrophic
+   backtracking, causing a denial of service if a URL were passed as a
+   parameter or redirected to via an HTTP
+   redirect.https://github.com/advisories/GHSA-q2q7-5pp4-w6pg
+[1m   CVE-2021-33503[0m
+[1m   For more information about this vulnerability, visit
+   [0mhttps://data.safetycli.com/v/43975/97c[0m
+   To ignore this vulnerability, use PyUp vulnerability id 43975 in safety’s
+   ignore command-line argument or add the ignore to your safety policy file.
+
+
+[31m-> Vulnerability found in requests version 2.20.0[0m
+[1m   Vulnerability ID: [0m71064
+[1m   Affected spec: [0m<2.32.2
+[1m   ADVISORY: [0mAffected versions of Requests, when making requests
+   through a Requests `Session`, if the first request is made with
+   `verify=False` to disable cert verification, all subsequent requests to
+   the same host will continue to ignore cert verification regardless of
+   changes to the value of `verify`. This behavior will continue for the
+   lifecycle of the connection in the connection pool. Requests 2.32.0 fixes
+   the issue, but versions 2.32.0 and 2.32.1 were yanked due to conflicts
+   with CVE-2024-35195 mitigation.
+[1m   CVE-2024-35195[0m
+[1m   For more information about this vulnerability, visit
+   [0mhttps://data.safetycli.com/v/71064/97c[0m
+   To ignore this vulnerability, use PyUp vulnerability id 71064 in safety’s
+   ignore command-line argument or add the ignore to your safety policy file.
+
+
+[31m-> Vulnerability found in requests version 2.20.0[0m
+[1m   Vulnerability ID: [0m77680
+[1m   Affected spec: [0m<2.32.4
+[1m   ADVISORY: [0mRequests is an HTTP library. Due to a URL parsing issue,
+   Requests releases prior to 2.32.4 may leak .netrc credentials to third
+   parties for specific maliciously-crafted URLs. Users should upgrade to
+   version 2.32.4 to receive a fix. For older versions of Requests, use of
+   the .netrc file can be disabled with `trust_env=False` on one's Requests
+   Session.
+[1m   CVE-2024-47081[0m
+[1m   For more information about this vulnerability, visit
+   [0mhttps://data.safetycli.com/v/77680/97c[0m
+   To ignore this vulnerability, use PyUp vulnerability id 77680 in safety’s
+   ignore command-line argument or add the ignore to your safety policy file.
+
+
+[31m-> Vulnerability found in requests version 2.20.0[0m
+[1m   Vulnerability ID: [0m58755
+[1m   Affected spec: [0m>=2.3.0,<2.31.0
+[1m   ADVISORY: [0mAffected versions of Requests are vulnerable to proxy
+   credential leakage. When redirected to an HTTPS endpoint, the Proxy-
+   Authorization header is forwarded to the destination server due to the use
+   of rebuild_proxies to reattach the header. This may allow a malicious
+   actor to exfiltrate sensitive information.
+[1m   CVE-2023-32681[0m
+[1m   For more information about this vulnerability, visit
+   [0mhttps://data.safetycli.com/v/58755/97c[0m
+   To ignore this vulnerability, use PyUp vulnerability id 58755 in safety’s
+   ignore command-line argument or add the ignore to your safety policy file.
+
+
+[31m-> Vulnerability found in pillow version 6.2.2[0m
+[1m   Vulnerability ID: [0m38451
+[1m   Affected spec: [0m<7.1.0
+[1m   ADVISORY: [0mIn libImaging/Jpeg2KDecode.c in Pillow before 7.1.0,
+   there are multiple out-of-bounds reads via a crafted JP2 file.
+[1m   CVE-2020-10994[0m
+[1m   For more information about this vulnerability, visit
+   [0mhttps://data.safetycli.com/v/38451/97c[0m
+   To ignore this vulnerability, use PyUp vulnerability id 38451 in safety’s
+   ignore command-line argument or add the ignore to your safety policy file.
+
+
+[31m-> Vulnerability found in pillow version 6.2.2[0m
+[1m   Vulnerability ID: [0m38450
+[1m   Affected spec: [0m<7.1.0
+[1m   ADVISORY: [0mIn Pillow before 7.1.0, there are two Buffer Overflows
+   in libImaging/TiffDecode.c.
+[1m   CVE-2020-10379[0m
+[1m   For more information about this vulnerability, visit
+   [0mhttps://data.safetycli.com/v/38450/97c[0m
+   To ignore this vulnerability, use PyUp vulnerability id 38450 in safety’s
+   ignore command-line argument or add the ignore to your safety policy file.
+
+
+[31m-> Vulnerability found in pillow version 6.2.2[0m
+[1m   Vulnerability ID: [0m38448
+[1m   Affected spec: [0m<7.1.0
+[1m   ADVISORY: [0mPillow before 7.1.0 has multiple out-of-bounds reads in
+   libImaging/FliDecode.c.
+[1m   CVE-2020-10177[0m
+[1m   For more information about this vulnerability, visit
+   [0mhttps://data.safetycli.com/v/38448/97c[0m
+   To ignore this vulnerability, use PyUp vulnerability id 38448 in safety’s
+   ignore command-line argument or add the ignore to your safety policy file.
+
+
+[31m-> Vulnerability found in pillow version 6.2.2[0m
+[1m   Vulnerability ID: [0m38449
+[1m   Affected spec: [0m<7.1.0
+[1m   ADVISORY: [0mIn libImaging/PcxDecode.c in Pillow before 7.1.0, an
+   out-of-bounds read can occur when reading PCX files where state->shuffle
+   is instructed to read beyond state->buffer.
+[1m   CVE-2020-10378[0m
+[1m   For more information about this vulnerability, visit
+   [0mhttps://data.safetycli.com/v/38449/97c[0m
+   To ignore this vulnerability, use PyUp vulnerability id 38449 in safety’s
+   ignore command-line argument or add the ignore to your safety policy file.
+
+
+[31m-> Vulnerability found in pillow version 6.2.2[0m
+[1m   Vulnerability ID: [0m40965
+[1m   Affected spec: [0m<8.3.0
+[1m   ADVISORY: [0mPillow 8.3.0 includes a fix for CVE-2021-34552: Pillow
+   through 8.2.0 and PIL (also known as Python Imaging Library) through 1.1.7
+   allow an attacker to pass controlled parameters directly into a convert
+   function to trigger a buffer overflow in Convert.chttps://pillow.readthedo
+   cs.io/en/stable/releasenotes/8.3.0.html#buffer-
+   overflowhttps://pillow.readthedocs.io/en/stable/releasenotes/index.html
+[1m   CVE-2021-34552[0m
+[1m   For more information about this vulnerability, visit
+   [0mhttps://data.safetycli.com/v/40965/97c[0m
+   To ignore this vulnerability, use PyUp vulnerability id 40965 in safety’s
+   ignore command-line argument or add the ignore to your safety policy file.
+
+
+[31m-> Vulnerability found in pillow version 6.2.2[0m
+[1m   Vulnerability ID: [0m40267
+[1m   Affected spec: [0m<8.1.1
+[1m   ADVISORY: [0mPillow 8.1.1 includes a fix for CVE-2021-27922: Pillow
+   before 8.1.1 allows attackers to cause a denial of service (memory
+   consumption) because the reported size of a contained image is not
+   properly checked for an ICNS container, and thus an attempted memory
+   allocation can be very
+   large.https://pillow.readthedocs.io/en/stable/releasenotes/8.1.1.html
+[1m   CVE-2021-27922[0m
+[1m   For more information about this vulnerability, visit
+   [0mhttps://data.safetycli.com/v/40267/97c[0m
+   To ignore this vulnerability, use PyUp vulnerability id 40267 in safety’s
+   ignore command-line argument or add the ignore to your safety policy file.
+
+
+[31m-> Vulnerability found in pillow version 6.2.2[0m
+[1m   Vulnerability ID: [0m40275
+[1m   Affected spec: [0m<8.1.1
+[1m   ADVISORY: [0mPillow 8.1.1 includes a fix for CVE-2021-25290: In
+   TiffDecode.c, there is a negative-offset memcpy with an invalid
+   size.https://pillow.readthedocs.io/en/stable/releasenotes/8.1.1.html
+[1m   CVE-2021-25290[0m
+[1m   For more information about this vulnerability, visit
+   [0mhttps://data.safetycli.com/v/40275/97c[0m
+   To ignore this vulnerability, use PyUp vulnerability id 40275 in safety’s
+   ignore command-line argument or add the ignore to your safety policy file.
+
+
+[31m-> Vulnerability found in pillow version 6.2.2[0m
+[1m   Vulnerability ID: [0m40272
+[1m   Affected spec: [0m<8.1.1
+[1m   ADVISORY: [0mPillow 8.1.1 includes a fix for CVE-2021-25291: In
+   TiffDecode.c, there is an out-of-bounds read in TiffreadRGBATile via
+   invalid tile
+   boundaries.https://pillow.readthedocs.io/en/stable/releasenotes/8.1.1.html
+[1m   CVE-2021-25291[0m
+[1m   For more information about this vulnerability, visit
+   [0mhttps://data.safetycli.com/v/40272/97c[0m
+   To ignore this vulnerability, use PyUp vulnerability id 40272 in safety’s
+   ignore command-line argument or add the ignore to your safety policy file.
+
+
+[31m-> Vulnerability found in pillow version 6.2.2[0m
+[1m   Vulnerability ID: [0m40263
+[1m   Affected spec: [0m<8.1.1
+[1m   ADVISORY: [0mPillow 8.1.1 includes a fix for CVE-2021-27921: Pillow
+   before 8.1.1 allows attackers to cause a denial of service (memory
+   consumption) because the reported size of a contained image is not
+   properly checked for a BLP container, and thus an attempted memory
+   allocation can be very
+   large.https://pillow.readthedocs.io/en/stable/releasenotes/8.1.1.html
+[1m   CVE-2021-27921[0m
+[1m   For more information about this vulnerability, visit
+   [0mhttps://data.safetycli.com/v/40263/97c[0m
+   To ignore this vulnerability, use PyUp vulnerability id 40263 in safety’s
+   ignore command-line argument or add the ignore to your safety policy file.
+
+
+[31m-> Vulnerability found in pillow version 6.2.2[0m
+[1m   Vulnerability ID: [0m40273
+[1m   Affected spec: [0m<8.1.1
+[1m   ADVISORY: [0mPillow 8.1.1 includes a fix for CVE-2021-25293: There is
+   an out-of-bounds read in SGIRleDecode.c.https://pillow.readthedocs.io/en/s
+   table/releasenotes/8.1.1.html
+[1m   CVE-2021-25293[0m
+[1m   For more information about this vulnerability, visit
+   [0mhttps://data.safetycli.com/v/40273/97c[0m
+   To ignore this vulnerability, use PyUp vulnerability id 40273 in safety’s
+   ignore command-line argument or add the ignore to your safety policy file.
+
+
+[31m-> Vulnerability found in pillow version 6.2.2[0m
+[1m   Vulnerability ID: [0m40266
+[1m   Affected spec: [0m<8.1.1
+[1m   ADVISORY: [0mPillow 8.1.1 includes a fix for CVE-2021-25292: The PDF
+   parser allows a regular expression DoS (ReDoS) attack via a crafted PDF
+   file because of a catastrophic backtracking
+   regex.https://pillow.readthedocs.io/en/stable/releasenotes/8.1.1.html
+[1m   CVE-2021-25292[0m
+[1m   For more information about this vulnerability, visit
+   [0mhttps://data.safetycli.com/v/40266/97c[0m
+   To ignore this vulnerability, use PyUp vulnerability id 40266 in safety’s
+   ignore command-line argument or add the ignore to your safety policy file.
+
+
+[31m-> Vulnerability found in pillow version 6.2.2[0m
+[1m   Vulnerability ID: [0m40274
+[1m   Affected spec: [0m<8.1.1
+[1m   ADVISORY: [0mPillow 8.1.1 includes a fix for CVE-2021-25289:
+   TiffDecode has a heap-based buffer overflow when decoding crafted YCbCr
+   files because of certain interpretation conflicts with LibTIFF in RGBA
+   mode. NOTE: this issue exists because of an incomplete fix for CVE-2020-35
+   654.https://pillow.readthedocs.io/en/stable/releasenotes/8.1.1.html
+[1m   CVE-2021-25289[0m
+[1m   For more information about this vulnerability, visit
+   [0mhttps://data.safetycli.com/v/40274/97c[0m
+   To ignore this vulnerability, use PyUp vulnerability id 40274 in safety’s
+   ignore command-line argument or add the ignore to your safety policy file.
+
+
+[31m-> Vulnerability found in pillow version 6.2.2[0m
+[1m   Vulnerability ID: [0m40596
+[1m   Affected spec: [0m<8.2.0
+[1m   ADVISORY: [0mPillow version 8.2.0 includes a fix for CVE-2021-28678:
+   For BLP data, BlpImagePlugin did not properly check that reads (after
+   jumping to file offsets) returned data. This could lead to a DoS where the
+   decoder could be run a large number of times on empty
+   data.https://lists.fedoraproject.org/archives/list/package-announce@lists.
+   fedoraproject.org/message/MQHA5HAIBOYI3R6HDWCLAGFTIQP767FL/https://github.
+   com/python-pillow/Pillow/pull/5377https://pillow.readthedocs.io/en/stable/
+   releasenotes/8.2.0.html#cve-2021-28678-fix-blp-dos
+[1m   CVE-2021-28678[0m
+[1m   For more information about this vulnerability, visit
+   [0mhttps://data.safetycli.com/v/40596/97c[0m
+   To ignore this vulnerability, use PyUp vulnerability id 40596 in safety’s
+   ignore command-line argument or add the ignore to your safety policy file.
+
+
+[31m-> Vulnerability found in pillow version 6.2.2[0m
+[1m   Vulnerability ID: [0m40592
+[1m   Affected spec: [0m<8.2.0
+[1m   ADVISORY: [0mPillow 8.2.0 includes a fix for CVE-2021-25287: There is
+   an out-of-bounds read in J2kDecode, in j2ku_graya_la.https://pillow.readth
+   edocs.io/en/stable/releasenotes/8.2.0.html#cve-2021-25287-cve-2021-25288-f
+   ix-oob-read-in-jpeg2kdecode
+[1m   CVE-2021-25287[0m
+[1m   For more information about this vulnerability, visit
+   [0mhttps://data.safetycli.com/v/40592/97c[0m
+   To ignore this vulnerability, use PyUp vulnerability id 40592 in safety’s
+   ignore command-line argument or add the ignore to your safety policy file.
+
+
+[31m-> Vulnerability found in pillow version 6.2.2[0m
+[1m   Vulnerability ID: [0m40593
+[1m   Affected spec: [0m<8.2.0
+[1m   ADVISORY: [0mPillow 8.2.0 includes a fix for CVE-2021-25288: There is
+   an out-of-bounds read in J2kDecode, in j2ku_gray_i.https://pillow.readthed
+   ocs.io/en/stable/releasenotes/8.2.0.html#cve-2021-25287-cve-2021-25288-fix
+   -oob-read-in-jpeg2kdecode
+[1m   CVE-2021-25288[0m
+[1m   For more information about this vulnerability, visit
+   [0mhttps://data.safetycli.com/v/40593/97c[0m
+   To ignore this vulnerability, use PyUp vulnerability id 40593 in safety’s
+   ignore command-line argument or add the ignore to your safety policy file.
+
+
+[31m-> Vulnerability found in pillow version 6.2.2[0m
+[1m   Vulnerability ID: [0m40594
+[1m   Affected spec: [0m<8.2.0
+[1m   ADVISORY: [0mPillow version 8.2.0 includes a fix for CVE-2021-28676:
+   For FLI data, FliDecode did not properly check that the block advance was
+   non-zero, potentially leading to an infinite loop on
+   load.https://lists.fedoraproject.org/archives/list/package-announce@lists.
+   fedoraproject.org/message/MQHA5HAIBOYI3R6HDWCLAGFTIQP767FL/https://github.
+   com/python-pillow/Pillow/pull/5377https://pillow.readthedocs.io/en/stable/
+   releasenotes/8.2.0.html#cve-2021-28676-fix-fli-dos
+[1m   CVE-2021-28676[0m
+[1m   For more information about this vulnerability, visit
+   [0mhttps://data.safetycli.com/v/40594/97c[0m
+   To ignore this vulnerability, use PyUp vulnerability id 40594 in safety’s
+   ignore command-line argument or add the ignore to your safety policy file.
+
+
+[31m-> Vulnerability found in pillow version 6.2.2[0m
+[1m   Vulnerability ID: [0m40595
+[1m   Affected spec: [0m<8.2.0
+[1m   ADVISORY: [0mPillow version 8.2.0 includes a fix for CVE-2021-28677:
+   For EPS data, the readline implementation used in EPSImageFile has to deal
+   with any combination of \r and \n as line endings. It used an accidentally
+   quadratic method of accumulating lines while looking for a line ending. A
+   malicious EPS file could use this to perform a DoS of Pillow in the open
+   phase, before an image was accepted for
+   opening.https://lists.fedoraproject.org/archives/list/package-announce@lis
+   ts.fedoraproject.org/message/MQHA5HAIBOYI3R6HDWCLAGFTIQP767FL/https://gith
+   ub.com/python-pillow/Pillow/pull/5377https://pillow.readthedocs.io/en/stab
+   le/releasenotes/8.2.0.html#cve-2021-28677-fix-eps-dos-on-open
+[1m   CVE-2021-28677[0m
+[1m   For more information about this vulnerability, visit
+   [0mhttps://data.safetycli.com/v/40595/97c[0m
+   To ignore this vulnerability, use PyUp vulnerability id 40595 in safety’s
+   ignore command-line argument or add the ignore to your safety policy file.
+
+
+[31m-> Vulnerability found in pillow version 6.2.2[0m
+[1m   Vulnerability ID: [0m44524
+[1m   Affected spec: [0m<9.0.0
+[1m   ADVISORY: [0mPillow 9.0.0 ensures JpegImagePlugin stops at the end of
+   a truncated file to avoid Denial of Service
+   attacks.https://github.com/python-
+   pillow/Pillow/pull/5921https://github.com/advisories/GHSA-4fx9-vc88-q2xc
+[1m   PVE-2022-44524[0m
+[1m   For more information about this vulnerability, visit
+   [0mhttps://data.safetycli.com/v/44524/97c[0m
+   To ignore this vulnerability, use PyUp vulnerability id 44524 in safety’s
+   ignore command-line argument or add the ignore to your safety policy file.
+
+
+[31m-> Vulnerability found in pillow version 6.2.2[0m
+[1m   Vulnerability ID: [0m44525
+[1m   Affected spec: [0m<9.0.0
+[1m   ADVISORY: [0mPillow 9.0.0 excludes carriage return in PDF regex to
+   help prevent ReDoS.https://github.com/python-
+   pillow/Pillow/pull/5912https://github.com/python-
+   pillow/Pillow/commit/43b800d933c996226e4d7df00c33fcbe46d97363
+[1m   PVE-2021-44525[0m
+[1m   For more information about this vulnerability, visit
+   [0mhttps://data.safetycli.com/v/44525/97c[0m
+   To ignore this vulnerability, use PyUp vulnerability id 44525 in safety’s
+   ignore command-line argument or add the ignore to your safety policy file.
+
+
+[31m-> Vulnerability found in pillow version 6.2.2[0m
+[1m   Vulnerability ID: [0m44485
+[1m   Affected spec: [0m<9.0.0
+[1m   ADVISORY: [0mPillow 9.0.0 includes a fix for CVE-2022-22815:
+   path_getbbox in path.c in Pillow before 9.0.0 improperly initializes Image
+   Path.Path.https://pillow.readthedocs.io/en/stable/releasenotes/9.0.0.html#
+   fixed-imagepath-path-array-handling
+[1m   CVE-2022-22815[0m
+[1m   For more information about this vulnerability, visit
+   [0mhttps://data.safetycli.com/v/44485/97c[0m
+   To ignore this vulnerability, use PyUp vulnerability id 44485 in safety’s
+   ignore command-line argument or add the ignore to your safety policy file.
+
+
+[31m-> Vulnerability found in pillow version 6.2.2[0m
+[1m   Vulnerability ID: [0m44486
+[1m   Affected spec: [0m<9.0.0
+[1m   ADVISORY: [0mPillow 9.0.0 includes a fix for CVE-2022-22816:
+   path_getbbox in path.c in Pillow before 9.0.0 has a buffer over-read
+   during initialization of ImagePath.Path.https://pillow.readthedocs.io/en/s
+   table/releasenotes/9.0.0.html#fixed-imagepath-path-array-handling
+[1m   CVE-2022-22816[0m
+[1m   For more information about this vulnerability, visit
+   [0mhttps://data.safetycli.com/v/44486/97c[0m
+   To ignore this vulnerability, use PyUp vulnerability id 44486 in safety’s
+   ignore command-line argument or add the ignore to your safety policy file.
+
+
+[31m-> Vulnerability found in pillow version 6.2.2[0m
+[1m   Vulnerability ID: [0m40270
+[1m   Affected spec: [0m<8.1.0
+[1m   ADVISORY: [0mIn Pillow before 8.1.0, PcxDecode has a buffer over-read
+   when decoding a crafted PCX file because the user-supplied stride value is
+   trusted for buffer calculations.
+[1m   CVE-2020-35653[0m
+[1m   For more information about this vulnerability, visit
+   [0mhttps://data.safetycli.com/v/40270/97c[0m
+   To ignore this vulnerability, use PyUp vulnerability id 40270 in safety’s
+   ignore command-line argument or add the ignore to your safety policy file.
+
+
+[31m-> Vulnerability found in pillow version 6.2.2[0m
+[1m   Vulnerability ID: [0m40265
+[1m   Affected spec: [0m<8.1.0
+[1m   ADVISORY: [0mPillow 8.1.0 fixes TIFF OOB Write error. CVE-2020-35654
+   #5175.
+[1m   CVE-2020-35654[0m
+[1m   For more information about this vulnerability, visit
+   [0mhttps://data.safetycli.com/v/40265/97c[0m
+   To ignore this vulnerability, use PyUp vulnerability id 40265 in safety’s
+   ignore command-line argument or add the ignore to your safety policy file.
+
+
+[31m-> Vulnerability found in pillow version 6.2.2[0m
+[1m   Vulnerability ID: [0m40271
+[1m   Affected spec: [0m<8.1.0
+[1m   ADVISORY: [0mPillow 8.1.0 includes a fix for SGI Decode buffer
+   overrun. CVE-2020-35655 #5173.
+[1m   CVE-2020-35655[0m
+[1m   For more information about this vulnerability, visit
+   [0mhttps://data.safetycli.com/v/40271/97c[0m
+   To ignore this vulnerability, use PyUp vulnerability id 40271 in safety’s
+   ignore command-line argument or add the ignore to your safety policy file.
+
+
+[31m-> Vulnerability found in pillow version 6.2.2[0m
+[1m   Vulnerability ID: [0m38452
+[1m   Affected spec: [0m<=7.0.0
+[1m   ADVISORY: [0mIn libImaging/SgiRleDecode.c in Pillow through 7.0.0, a
+   number of out-of-bounds reads exist in the parsing of SGI image files, a
+   different issue than CVE-2020-5311.
+[1m   CVE-2020-11538[0m
+[1m   For more information about this vulnerability, visit
+   [0mhttps://data.safetycli.com/v/38452/97c[0m
+   To ignore this vulnerability, use PyUp vulnerability id 38452 in safety’s
+   ignore command-line argument or add the ignore to your safety policy file.
+
+
+[31m-> Vulnerability found in pillow version 6.2.2[0m
+[1m   Vulnerability ID: [0m61489
+[1m   Affected spec: [0m>=2.5.0,<10.0.1
+[1m   ADVISORY: [0mPillow 10.0.1 updates its C dependency 'libwebp' to
+   1.3.2 to include a fix for a high-risk vulnerability.https://pillow.readth
+   edocs.io/en/stable/releasenotes/10.0.1.html
+[1m   CVE-2023-4863[0m
+[1m   For more information about this vulnerability, visit
+   [0mhttps://data.safetycli.com/v/61489/97c[0m
+   To ignore this vulnerability, use PyUp vulnerability id 61489 in safety’s
+   ignore command-line argument or add the ignore to your safety policy file.
+
+
+[31m-> Vulnerability found in pillow version 6.2.2[0m
+[1m   Vulnerability ID: [0m67136
+[1m   Affected spec: [0m<10.3.0
+[1m   ADVISORY: [0mPillow 10.3.0 introduces a security update addressing
+   CVE-2024-28219 by replacing certain functions with strncpy to prevent
+   buffer overflow issues.
+[1m   CVE-2024-28219[0m
+[1m   For more information about this vulnerability, visit
+   [0mhttps://data.safetycli.com/v/67136/97c[0m
+   To ignore this vulnerability, use PyUp vulnerability id 67136 in safety’s
+   ignore command-line argument or add the ignore to your safety policy file.
+
+
+[31m-> Vulnerability found in pillow version 6.2.2[0m
+[1m   Vulnerability ID: [0m40264
+[1m   Affected spec: [0m<8.0.1
+[1m   ADVISORY: [0mPillow 8.0.1 updates 'FreeType' used in binary wheels to
+   v2.10.4 to include a security fix.
+[1m   CVE-2020-15999[0m
+[1m   For more information about this vulnerability, visit
+   [0mhttps://data.safetycli.com/v/40264/97c[0m
+   To ignore this vulnerability, use PyUp vulnerability id 40264 in safety’s
+   ignore command-line argument or add the ignore to your safety policy file.
+
+
+[31m-> Vulnerability found in pillow version 6.2.2[0m
+[1m   Vulnerability ID: [0m41271
+[1m   Affected spec: [0m>=5.2.0,<8.3.2
+[1m   ADVISORY: [0mPillow from 5.2.0 and before 8.3.2 is vulnerable to
+   Regular Expression Denial of Service (ReDoS) via the getrgb
+   function.https://github.com/python-pillow/Pillow/commit/9e08eb8f78fdfd2f47
+   6e1b20b7cf38683754866bhttps://pillow.readthedocs.io/en/stable/releasenotes
+   /8.3.2.html
+[1m   CVE-2021-23437[0m
+[1m   For more information about this vulnerability, visit
+   [0mhttps://data.safetycli.com/v/41271/97c[0m
+   To ignore this vulnerability, use PyUp vulnerability id 41271 in safety’s
+   ignore command-line argument or add the ignore to your safety policy file.
+
+
+[31m-> Vulnerability found in pillow version 6.2.2[0m
+[1m   Vulnerability ID: [0m62156
+[1m   Affected spec: [0m<10.0.0
+[1m   ADVISORY: [0mPillow 10.0.0 includes a fix for CVE-2023-44271: Denial
+   of Service that uncontrollably allocates memory to process a given task,
+   potentially causing a service to crash by having it run out of memory.
+   This occurs for truetype in ImageFont when textlength in an ImageDraw
+   instance operates on a long text argument.https://github.com/python-
+   pillow/Pillow/pull/7244
+[1m   CVE-2023-44271[0m
+[1m   For more information about this vulnerability, visit
+   [0mhttps://data.safetycli.com/v/62156/97c[0m
+   To ignore this vulnerability, use PyUp vulnerability id 62156 in safety’s
+   ignore command-line argument or add the ignore to your safety policy file.
+
+
+[31m-> Vulnerability found in pillow version 6.2.2[0m
+[1m   Vulnerability ID: [0m45356
+[1m   Affected spec: [0m<9.0.1
+[1m   ADVISORY: [0mPillow before 9.0.1 allows attackers to delete files
+   because spaces in temporary pathnames are mishandled.
+[1m   CVE-2022-24303[0m
+[1m   For more information about this vulnerability, visit
+   [0mhttps://data.safetycli.com/v/45356/97c[0m
+   To ignore this vulnerability, use PyUp vulnerability id 45356 in safety’s
+   ignore command-line argument or add the ignore to your safety policy file.
+
+
+[31m-> Vulnerability found in pillow version 6.2.2[0m
+[1m   Vulnerability ID: [0m44487
+[1m   Affected spec: [0m<9.0.1
+[1m   ADVISORY: [0mPillow 9.0.1 includes a fix for CVE-2022-22817:
+   PIL.ImageMath.eval in Pillow before 9.0.0 allows evaluation of arbitrary
+   expressions, such as ones that use the Python exec method. A first patch
+   was issued for version 9.0.0 but it did not prevent builtins available to
+   lambda expressions.https://pillow.readthedocs.io/en/stable/releasenotes/9.
+   0.1.html#security
+[1m   CVE-2022-22817[0m
+[1m   For more information about this vulnerability, visit
+   [0mhttps://data.safetycli.com/v/44487/97c[0m
+   To ignore this vulnerability, use PyUp vulnerability id 44487 in safety’s
+   ignore command-line argument or add the ignore to your safety policy file.
+
+
+[31m-> Vulnerability found in pillow version 6.2.2[0m
+[1m   Vulnerability ID: [0m54688
+[1m   Affected spec: [0m>=0,<8.2.0
+[1m   ADVISORY: [0mAn issue was discovered in Pillow before 8.2.0.
+   PSDImagePlugin.PsdImageFile lacked a sanity check on the number of input
+   layers relative to the size of the data block. This could lead to a DoS on
+   Image.open prior to Image.load.
+[1m   CVE-2021-28675[0m
+[1m   For more information about this vulnerability, visit
+   [0mhttps://data.safetycli.com/v/54688/97c[0m
+   To ignore this vulnerability, use PyUp vulnerability id 54688 in safety’s
+   ignore command-line argument or add the ignore to your safety policy file.
+
+
+[31m-> Vulnerability found in pillow version 6.2.2[0m
+[1m   Vulnerability ID: [0m40268
+[1m   Affected spec: [0m>=4.3.0,<8.1.1
+[1m   ADVISORY: [0mPillow before 8.1.1 allows attackers to cause a denial
+   of service (memory consumption) because the reported size of a contained
+   image is not properly checked for an ICO container, and thus an attempted
+   memory allocation can be very large.
+[1m   CVE-2021-27923[0m
+[1m   For more information about this vulnerability, visit
+   [0mhttps://data.safetycli.com/v/40268/97c[0m
+   To ignore this vulnerability, use PyUp vulnerability id 40268 in safety’s
+   ignore command-line argument or add the ignore to your safety policy file.
+
+
+[31m-> Vulnerability found in pillow version 6.2.2[0m
+[1m   Vulnerability ID: [0m64437
+[1m   Affected spec: [0m<10.2.0
+[1m   ADVISORY: [0mPillow is potentially vulnerable to DoS attacks through
+   PIL.ImageFont.ImageFont.getmask(). A decompression bomb check has also
+   been added to the affected function.
+[1m   PVE-2024-64437[0m
+[1m   For more information about this vulnerability, visit
+   [0mhttps://data.safetycli.com/v/64437/97c[0m
+   To ignore this vulnerability, use PyUp vulnerability id 64437 in safety’s
+   ignore command-line argument or add the ignore to your safety policy file.
+
+
+[31m-> Vulnerability found in pillow version 6.2.2[0m
+[1m   Vulnerability ID: [0m64436
+[1m   Affected spec: [0m<10.2.0
+[1m   ADVISORY: [0mPillow is affected by an arbitrary code execution
+   vulnerability. If an attacker has control over the keys passed to the
+   environment argument of PIL.ImageMath.eval(), they may be able to execute
+   arbitrary
+   code.https://pillow.readthedocs.io/en/stable/releasenotes/10.2.0.html
+[1m   CVE-2023-50447[0m
+[1m   For more information about this vulnerability, visit
+   [0mhttps://data.safetycli.com/v/64436/97c[0m
+   To ignore this vulnerability, use PyUp vulnerability id 64436 in safety’s
+   ignore command-line argument or add the ignore to your safety policy file.
+
+
+[31m-> Vulnerability found in pillow version 6.2.2[0m
+[1m   Vulnerability ID: [0m51885
+[1m   Affected spec: [0m<9.2.0
+[1m   ADVISORY: [0mPillow before 9.2.0 performs Improper Handling of Highly
+   Compressed GIF Data (Data Amplification).
+[1m   CVE-2022-45198[0m
+[1m   For more information about this vulnerability, visit
+   [0mhttps://data.safetycli.com/v/51885/97c[0m
+   To ignore this vulnerability, use PyUp vulnerability id 51885 in safety’s
+   ignore command-line argument or add the ignore to your safety policy file.
+
+
+[31m-> Vulnerability found in django version 1.11.29[0m
+[1m   Vulnerability ID: [0m39646
+[1m   Affected spec: [0m<2.2.19
+[1m   ADVISORY: [0mDjango versions 2.2.19, 3.0.13 and 3.1.7 include a fix
+   for CVE-2021-23336: Web cache poisoning via
+   'django.utils.http.limited_parse_qsl()'. Django contains a copy of
+   'urllib.parse.parse_qsl' which was added to backport some security fixes.
+   A further security fix has been issued recently such that 'parse_qsl(' no
+   longer allows using ';' as a query parameter separator by default.
+[1m   CVE-2021-23336[0m
+[1m   For more information about this vulnerability, visit
+   [0mhttps://data.safetycli.com/v/39646/97c[0m
+   To ignore this vulnerability, use PyUp vulnerability id 39646 in safety’s
+   ignore command-line argument or add the ignore to your safety policy file.
+
+
+[31m-> Vulnerability found in django version 1.11.29[0m
+[1m   Vulnerability ID: [0m65771
+[1m   Affected spec: [0m<3.2.25
+[1m   ADVISORY: [0mAffected versions of Django are vulnerable to potential
+   regular expression denial-of-service (REDoS).
+   django.utils.text.Truncator.words() method (with html=True) and
+   truncatewords_html template filter were subject to a potential regular
+   expression denial-of-service attack using a suitably crafted string
+   (follow up to CVE-2019-14232 and CVE-2023-43665).
+[1m   CVE-2024-27351[0m
+[1m   For more information about this vulnerability, visit
+   [0mhttps://data.safetycli.com/v/65771/97c[0m
+   To ignore this vulnerability, use PyUp vulnerability id 65771 in safety’s
+   ignore command-line argument or add the ignore to your safety policy file.
+
+
+[31m-> Vulnerability found in django version 1.11.29[0m
+[1m   Vulnerability ID: [0m40637
+[1m   Affected spec: [0m>=1.7,<2.2.24
+[1m   ADVISORY: [0mAffected versions of the Django package are vulnerable
+   to Path Traversal due to improper validation of file paths in the
+   django.contrib.admindocs module. The `TemplateDetailView` view allows
+   staff members to verify the existence of arbitrary files by manipulating
+   the file path. An attacker with staff privileges can exploit this
+   vulnerability to check for the presence of files outside the template root
+   directories, and if the `admindocs` templates are customized to display
+   file contents, they can also access the contents of these files.
+[1m   CVE-2021-33203[0m
+[1m   For more information about this vulnerability, visit
+   [0mhttps://data.safetycli.com/v/40637/97c[0m
+   To ignore this vulnerability, use PyUp vulnerability id 40637 in safety’s
+   ignore command-line argument or add the ignore to your safety policy file.
+
+
+[31m-> Vulnerability found in django version 1.11.29[0m
+[1m   Vulnerability ID: [0m81270
+[1m   Affected spec: [0m<4.2.26
+[1m   ADVISORY: [0mCVE-2025-64459: Affected versions of the Django package
+   are vulnerable to SQL Injection due to improper input validation, allowing
+   the internal _connector keyword argument to be accepted from untrusted
+   dictionaries via expansion. The .filter(), .exclude(), and .get() methods
+   on QuerySet, as well as the Q class, resolve **kwargs and will treat a
+   supplied _connector value as the logical connector without constraining it
+   to the expected set (AND/OR), permitting attacker-controlled tokens to
+   influence SQL predicate construction.
+[1m   CVE-2025-64459[0m
+[1m   For more information about this vulnerability, visit
+   [0mhttps://data.safetycli.com/v/81270/97c[0m
+   To ignore this vulnerability, use PyUp vulnerability id 81270 in safety’s
+   ignore command-line argument or add the ignore to your safety policy file.
+
+
+[31m-> Vulnerability found in django version 1.11.29[0m
+[1m   Vulnerability ID: [0m81269
+[1m   Affected spec: [0m<4.2.26
+[1m   ADVISORY: [0mCVE-2025-64458: Affected versions of the Django package
+   are vulnerable to Denial of Service (DoS) due to slow Unicode NFKC
+   normalization on Windows being applied to untrusted inputs. The
+   django.contrib.auth.views.LoginView and
+   django.contrib.auth.views.LogoutView, and django.views.i18n.set_language
+   normalize user-controlled strings using Python’s NFKC algorithm, which is
+   unusually slow on Windows for huge Unicode sequences and can be triggered
+   to consume excessive CPU.
+[1m   CVE-2025-64458[0m
+[1m   For more information about this vulnerability, visit
+   [0mhttps://data.safetycli.com/v/81269/97c[0m
+   To ignore this vulnerability, use PyUp vulnerability id 81269 in safety’s
+   ignore command-line argument or add the ignore to your safety policy file.
+
+
+[31m-> Vulnerability found in django version 1.11.29[0m
+[1m   Vulnerability ID: [0m52945
+[1m   Affected spec: [0m<3.2.17
+[1m   ADVISORY: [0mDjango 3.2.17, 4.0.9 and 4.1.6 includes a fix for
+   CVE-2023-23969: In Django 3.2 before 3.2.17, 4.0 before 4.0.9, and 4.1
+   before 4.1.6, the parsed values of Accept-Language headers are cached in
+   order to avoid repetitive parsing. This leads to a potential denial-of-
+   service vector via excessive memory usage if the raw value of Accept-
+   Language headers is very
+   large.https://www.djangoproject.com/weblog/2023/feb/01/security-releases
+[1m   CVE-2023-23969[0m
+[1m   For more information about this vulnerability, visit
+   [0mhttps://data.safetycli.com/v/52945/97c[0m
+   To ignore this vulnerability, use PyUp vulnerability id 52945 in safety’s
+   ignore command-line argument or add the ignore to your safety policy file.
+
+
+[31m-> Vulnerability found in django version 1.11.29[0m
+[1m   Vulnerability ID: [0m60956
+[1m   Affected spec: [0m<3.2.21
+[1m   ADVISORY: [0mAffected versions of Django are vulnerable to potential
+   Denial of Service via certain inputs with a very large number of Unicode
+   characters in django.utils.encoding.uri_to_iri().
+[1m   CVE-2023-41164[0m
+[1m   For more information about this vulnerability, visit
+   [0mhttps://data.safetycli.com/v/60956/97c[0m
+   To ignore this vulnerability, use PyUp vulnerability id 60956 in safety’s
+   ignore command-line argument or add the ignore to your safety policy file.
+
+
+[31m-> Vulnerability found in django version 1.11.29[0m
+[1m   Vulnerability ID: [0m79173
+[1m   Affected spec: [0m<4.2.24
+[1m   ADVISORY: [0mAffected versions of the Django package are vulnerable
+   to SQL Injection due to insufficient input sanitization in
+   FilteredRelation column aliases. The FilteredRelation class fails to
+   properly validate or escape column alias names when they are provided
+   through dictionary expansion as keyword arguments to QuerySet.annotate()
+   or QuerySet.alias() methods, allowing malicious SQL code to be injected
+   directly into the generated database queries.
+[1m   CVE-2025-57833[0m
+[1m   For more information about this vulnerability, visit
+   [0mhttps://data.safetycli.com/v/79173/97c[0m
+   To ignore this vulnerability, use PyUp vulnerability id 79173 in safety’s
+   ignore command-line argument or add the ignore to your safety policy file.
+
+
+[31m-> Vulnerability found in django version 1.11.29[0m
+[1m   Vulnerability ID: [0m77686
+[1m   Affected spec: [0m<4.2.22
+[1m   ADVISORY: [0mAn issue was discovered in Django 5.2 before 5.2.3, 5.1
+   before 5.1.11, and 4.2 before 4.2.23. Internal HTTP response logging does
+   not escape request.path, which allows remote attackers to potentially
+   manipulate log output via crafted URLs. This may lead to log injection or
+   forgery when logs are viewed in terminals or processed by external
+   systems.
+[1m   CVE-2025-48432[0m
+[1m   For more information about this vulnerability, visit
+   [0mhttps://data.safetycli.com/v/77686/97c[0m
+   To ignore this vulnerability, use PyUp vulnerability id 77686 in safety’s
+   ignore command-line argument or add the ignore to your safety policy file.
+
+
+[31m-> Vulnerability found in django version 1.11.29[0m
+[1m   Vulnerability ID: [0m43041
+[1m   Affected spec: [0m<2.2.25
+[1m   ADVISORY: [0mDjango versions 2.2.25, 3.1.14 and 3.2.10 include a fix
+   for CVE-2021-44420: In Django 2.2 before 2.2.25, 3.1 before 3.1.14, and
+   3.2 before 3.2.10, HTTP requests for URLs with trailing newlines could
+   bypass upstream access control based on URL
+   paths.https://www.djangoproject.com/weblog/2021/dec/07/security-releases/
+[1m   CVE-2021-44420[0m
+[1m   For more information about this vulnerability, visit
+   [0mhttps://data.safetycli.com/v/43041/97c[0m
+   To ignore this vulnerability, use PyUp vulnerability id 43041 in safety’s
+   ignore command-line argument or add the ignore to your safety policy file.
+
+
+[31m-> Vulnerability found in django version 1.11.29[0m
+[1m   Vulnerability ID: [0m53315
+[1m   Affected spec: [0m<3.2.18
+[1m   ADVISORY: [0mDjango 4.1.7, 4.0.10 and 3.2.18 include a fix for
+   CVE-2023-24580: Potential denial-of-service vulnerability in file
+   uploads.https://www.djangoproject.com/weblog/2023/feb/14/security-releases
+[1m   CVE-2023-24580[0m
+[1m   For more information about this vulnerability, visit
+   [0mhttps://data.safetycli.com/v/53315/97c[0m
+   To ignore this vulnerability, use PyUp vulnerability id 53315 in safety’s
+   ignore command-line argument or add the ignore to your safety policy file.
+
+
+[31m-> Vulnerability found in django version 1.11.29[0m
+[1m   Vulnerability ID: [0m48040
+[1m   Affected spec: [0m<2.2.28
+[1m   ADVISORY: [0mDjango 2.2.28, 3.2.13 and 4.0.4 include a fix for
+   CVE-2022-28347: A SQL injection issue was discovered in QuerySet.explain()
+   in Django 2.2 before 2.2.28, 3.2 before 3.2.13, and 4.0 before 4.0.4. This
+   occurs by passing a crafted dictionary (with dictionary expansion) as the
+   **options argument, and placing the injection payload in an option
+   name.https://www.djangoproject.com/weblog/2022/apr/11/security-releases
+[1m   CVE-2022-28347[0m
+[1m   For more information about this vulnerability, visit
+   [0mhttps://data.safetycli.com/v/48040/97c[0m
+   To ignore this vulnerability, use PyUp vulnerability id 48040 in safety’s
+   ignore command-line argument or add the ignore to your safety policy file.
+
+
+[31m-> Vulnerability found in django version 1.11.29[0m
+[1m   Vulnerability ID: [0m48041
+[1m   Affected spec: [0m<2.2.28
+[1m   ADVISORY: [0mDjango 2.2.28, 3.2.13 and 4.0.4 include a fix for
+   CVE-2022-28346: An issue was discovered in Django 2.2 before 2.2.28, 3.2
+   before 3.2.13, and 4.0 before 4.0.4. QuerySet.annotate(), aggregate(), and
+   extra() methods are subject to SQL injection in column aliases via a
+   crafted dictionary (with dictionary expansion) as the passed
+   **kwargs.https://www.djangoproject.com/weblog/2022/apr/11/security-
+   releases
+[1m   CVE-2022-28346[0m
+[1m   For more information about this vulnerability, visit
+   [0mhttps://data.safetycli.com/v/48041/97c[0m
+   To ignore this vulnerability, use PyUp vulnerability id 48041 in safety’s
+   ignore command-line argument or add the ignore to your safety policy file.
+
+
+[31m-> Vulnerability found in django version 1.11.29[0m
+[1m   Vulnerability ID: [0m55264
+[1m   Affected spec: [0m<3.2.19
+[1m   ADVISORY: [0mDjango 4.2.1, 4.1.9 and 3.2.19 include a fix for
+   CVE-2023-31047: In Django 3.2 before 3.2.19, 4.x before 4.1.9, and 4.2
+   before 4.2.1, it was possible to bypass validation when using one form
+   field to upload multiple files. This multiple upload has never been
+   supported by forms.FileField or forms.ImageField (only the last uploaded
+   file was validated). However, Django's "Uploading multiple files"
+   documentation suggested
+   otherwise.https://www.djangoproject.com/weblog/2023/may/03/security-
+   releases
+[1m   CVE-2023-31047[0m
+[1m   For more information about this vulnerability, visit
+   [0mhttps://data.safetycli.com/v/55264/97c[0m
+   To ignore this vulnerability, use PyUp vulnerability id 55264 in safety’s
+   ignore command-line argument or add the ignore to your safety policy file.
+
+
+[31m-> Vulnerability found in django version 1.11.29[0m
+[1m   Vulnerability ID: [0m61586
+[1m   Affected spec: [0m<3.2.22
+[1m   ADVISORY: [0mAffected versions of Django are vulnerable to Denial-of-
+   Service via django.utils.text.Truncator. The django.utils.text.Truncator
+   chars() and words() methods (when used with html=True) are subject to a
+   potential DoS (denial of service) attack via certain inputs with very
+   long, potentially malformed HTML text. The chars() and words() methods are
+   used to implement the truncatechars_html and truncatewords_html template
+   filters, which are thus also vulnerable. NOTE: this issue exists because
+   of an incomplete fix for CVE-2019-14232.
+[1m   CVE-2023-43665[0m
+[1m   For more information about this vulnerability, visit
+   [0mhttps://data.safetycli.com/v/61586/97c[0m
+   To ignore this vulnerability, use PyUp vulnerability id 61586 in safety’s
+   ignore command-line argument or add the ignore to your safety policy file.
+
+
+[31m-> Vulnerability found in django version 1.11.29[0m
+[1m   Vulnerability ID: [0m73023
+[1m   Affected spec: [0m<4.2.16
+[1m   ADVISORY: [0mA potential denial-of-service vulnerability has been
+   identified in Django's urlize() and urlizetrunc() functions in
+   django.utils.html. This vulnerability can be triggered by inputting huge
+   strings containing a specific sequence of characters.
+[1m   CVE-2024-45230[0m
+[1m   For more information about this vulnerability, visit
+   [0mhttps://data.safetycli.com/v/73023/97c[0m
+   To ignore this vulnerability, use PyUp vulnerability id 73023 in safety’s
+   ignore command-line argument or add the ignore to your safety policy file.
+
+
+[31m-> Vulnerability found in django version 1.11.29[0m
+[1m   Vulnerability ID: [0m73028
+[1m   Affected spec: [0m<4.2.16
+[1m   ADVISORY: [0mA security vulnerability has been discovered in certain
+   versions of Django, affecting the password reset functionality. The
+   PasswordResetForm class in django.contrib.auth.forms inadvertently allowed
+   attackers to enumerate user email addresses by exploiting unhandled
+   exceptions during the email sending process. This could be done by issuing
+   password reset requests and observing the responses. Django has
+   implemented a fix where these exceptions are now caught and logged using
+   the django.contrib.auth logger, preventing potential information leakage
+   through error responses.
+[1m   CVE-2024-45231[0m
+[1m   For more information about this vulnerability, visit
+   [0mhttps://data.safetycli.com/v/73028/97c[0m
+   To ignore this vulnerability, use PyUp vulnerability id 73028 in safety’s
+   ignore command-line argument or add the ignore to your safety policy file.
+
+
+[31m-> Vulnerability found in django version 1.11.29[0m
+[1m   Vulnerability ID: [0m40404
+[1m   Affected spec: [0m<2.2.21
+[1m   ADVISORY: [0mDjango 2.2.21, 3.1.9 and 3.2.1 include a fix for
+   CVE-2021-31542: MultiPartParser, UploadedFile, and FieldFile allowed
+   directory traversal via uploaded files with suitably crafted file
+   names.https://www.djangoproject.com/weblog/2021/may/04/security-releases
+[1m   CVE-2021-31542[0m
+[1m   For more information about this vulnerability, visit
+   [0mhttps://data.safetycli.com/v/40404/97c[0m
+   To ignore this vulnerability, use PyUp vulnerability id 40404 in safety’s
+   ignore command-line argument or add the ignore to your safety policy file.
+
+
+[31m-> Vulnerability found in django version 1.11.29[0m
+[1m   Vulnerability ID: [0m77119
+[1m   Affected spec: [0m<4.2.21
+[1m   ADVISORY: [0mAn issue was discovered in Django 4.2 before 4.2.21, 5.1
+   before 5.1.9, and 5.2 before 5.2.1. The django.utils.html.strip_tags()
+   function is vulnerable to a potential denial-of-service (slow performance)
+   when processing inputs containing large sequences of incomplete HTML tags.
+   The template filter striptags is also vulnerable, because it is built on
+   top of strip_tags().
+[1m   CVE-2025-32873[0m
+[1m   For more information about this vulnerability, visit
+   [0mhttps://data.safetycli.com/v/77119/97c[0m
+   To ignore this vulnerability, use PyUp vulnerability id 77119 in safety’s
+   ignore command-line argument or add the ignore to your safety policy file.
+
+
+[31m-> Vulnerability found in django version 1.11.29[0m
+[1m   Vulnerability ID: [0m59293
+[1m   Affected spec: [0m<3.2.20
+[1m   ADVISORY: [0mAffected versions of Django are vulnerable to a
+   potential ReDoS (regular expression denial of service) in EmailValidator
+   and URLValidator via a very large number of domain name labels of emails
+   and URLs.
+[1m   CVE-2023-36053[0m
+[1m   For more information about this vulnerability, visit
+   [0mhttps://data.safetycli.com/v/59293/97c[0m
+   To ignore this vulnerability, use PyUp vulnerability id 59293 in safety’s
+   ignore command-line argument or add the ignore to your safety policy file.
+
+
+[31m-> Vulnerability found in django version 1.11.29[0m
+[1m   Vulnerability ID: [0m49733
+[1m   Affected spec: [0m<3.2.14
+[1m   ADVISORY: [0mDjango 3.2.14 and 4.0.6 include a fix for
+   CVE-2022-34265: Potential SQL injection via Trunc(kind) and
+   Extract(lookup_name)
+   arguments.https://www.djangoproject.com/weblog/2022/jul/04/security-
+   releases
+[1m   CVE-2022-34265[0m
+[1m   For more information about this vulnerability, visit
+   [0mhttps://data.safetycli.com/v/49733/97c[0m
+   To ignore this vulnerability, use PyUp vulnerability id 49733 in safety’s
+   ignore command-line argument or add the ignore to your safety policy file.
+
+
+[31m-> Vulnerability found in django version 1.11.29[0m
+[1m   Vulnerability ID: [0m39594
+[1m   Affected spec: [0m<2.1.9
+[1m   ADVISORY: [0mDjango versions 2.1.9 and 2.2.2 include a patched
+   bundled jQuery version to avoid a Prototype Pollution vulnerability.
+[1m   CVE-2019-11358[0m
+[1m   For more information about this vulnerability, visit
+   [0mhttps://data.safetycli.com/v/39594/97c[0m
+   To ignore this vulnerability, use PyUp vulnerability id 39594 in safety’s
+   ignore command-line argument or add the ignore to your safety policy file.
+
+
+[31m-> Vulnerability found in django version 1.11.29[0m
+[1m   Vulnerability ID: [0m44742
+[1m   Affected spec: [0m<2.2.27
+[1m   ADVISORY: [0mThe {% debug %} template tag in Django 2.2 before
+   2.2.27, 3.2 before 3.2.12, and 4.0 before 4.0.2 does not properly encode
+   the current context. This may lead to XSS.
+[1m   CVE-2022-22818[0m
+[1m   For more information about this vulnerability, visit
+   [0mhttps://data.safetycli.com/v/44742/97c[0m
+   To ignore this vulnerability, use PyUp vulnerability id 44742 in safety’s
+   ignore command-line argument or add the ignore to your safety policy file.
+
+
+[31m-> Vulnerability found in django version 1.11.29[0m
+[1m   Vulnerability ID: [0m44741
+[1m   Affected spec: [0m<2.2.27
+[1m   ADVISORY: [0mDjango 2.2.27, 3.2.12 and 4.0.2 include a fix for
+   CVE-2022-23833: Denial-of-service possibility in file
+   uploads.https://www.djangoproject.com/weblog/2022/feb/01/security-releases
+[1m   CVE-2022-23833[0m
+[1m   For more information about this vulnerability, visit
+   [0mhttps://data.safetycli.com/v/44741/97c[0m
+   To ignore this vulnerability, use PyUp vulnerability id 44741 in safety’s
+   ignore command-line argument or add the ignore to your safety policy file.
+
+
+[31m-> Vulnerability found in django version 1.11.29[0m
+[1m   Vulnerability ID: [0m44426
+[1m   Affected spec: [0m<2.2.26
+[1m   ADVISORY: [0mDjango 2.2.26, 3.2.11 and 4.0.1 include a fix for
+   CVE-2021-45452: Storage.save in Django 2.2 before 2.2.26, 3.2 before
+   3.2.11, and 4.0 before 4.0.1 allows directory traversal if crafted
+   filenames are directly passed to
+   it.https://www.djangoproject.com/weblog/2022/jan/04/security-releases/
+[1m   CVE-2021-45452[0m
+[1m   For more information about this vulnerability, visit
+   [0mhttps://data.safetycli.com/v/44426/97c[0m
+   To ignore this vulnerability, use PyUp vulnerability id 44426 in safety’s
+   ignore command-line argument or add the ignore to your safety policy file.
+
+
+[31m-> Vulnerability found in django version 1.11.29[0m
+[1m   Vulnerability ID: [0m44423
+[1m   Affected spec: [0m<2.2.26
+[1m   ADVISORY: [0mDjango 2.2.26, 3.2.11 and 4.0.1 include a fix for
+   CVE-2021-45115: UserAttributeSimilarityValidator incurred significant
+   overhead in evaluating a submitted password that was artificially large in
+   relation to the comparison values. In a situation where access to user
+   registration was unrestricted, this provided a potential vector for a
+   denial-of-service
+   attack.https://www.djangoproject.com/weblog/2022/jan/04/security-releases/
+[1m   CVE-2021-45115[0m
+[1m   For more information about this vulnerability, visit
+   [0mhttps://data.safetycli.com/v/44423/97c[0m
+   To ignore this vulnerability, use PyUp vulnerability id 44423 in safety’s
+   ignore command-line argument or add the ignore to your safety policy file.
+
+
+[31m-> Vulnerability found in django version 1.11.29[0m
+[1m   Vulnerability ID: [0m44427
+[1m   Affected spec: [0m<2.2.26
+[1m   ADVISORY: [0mDjango 2.2.26, 3.2.11 and 4.0.1 include a fix for
+   CVE-2021-45116: An issue was discovered in Django 2.2 before 2.2.26, 3.2
+   before 3.2.11, and 4.0 before 4.0.1. Due to leveraging the Django Template
+   Language's variable resolution logic, the dictsort template filter was
+   potentially vulnerable to information disclosure, or an unintended method
+   call, if passed a suitably crafted
+   key.https://www.djangoproject.com/weblog/2022/jan/04/security-releases
+[1m   CVE-2021-45116[0m
+[1m   For more information about this vulnerability, visit
+   [0mhttps://data.safetycli.com/v/44427/97c[0m
+   To ignore this vulnerability, use PyUp vulnerability id 44427 in safety’s
+   ignore command-line argument or add the ignore to your safety policy file.
+
+
+[31m-> Vulnerability found in django version 1.11.29[0m
+[1m   Vulnerability ID: [0m62126
+[1m   Affected spec: [0m<3.2.23
+[1m   ADVISORY: [0mDjango 4.2.7, 4.1.13 and 3.2.23 include a fix for
+   CVE-2023-46695: Potential denial of service vulnerability in UsernameField
+   on Windows.https://www.djangoproject.com/weblog/2023/nov/01/security-
+   releases
+[1m   CVE-2023-46695[0m
+[1m   For more information about this vulnerability, visit
+   [0mhttps://data.safetycli.com/v/62126/97c[0m
+   To ignore this vulnerability, use PyUp vulnerability id 62126 in safety’s
+   ignore command-line argument or add the ignore to your safety policy file.
+
+
+[31m-> Vulnerability found in django version 1.11.29[0m
+[1m   Vulnerability ID: [0m74396
+[1m   Affected spec: [0m<4.2.17
+[1m   ADVISORY: [0mDjango affected versions are vulnerable to a potential
+   SQL injection in the HasKey(lhs, rhs) lookup on Oracle databases. The
+   vulnerability arises when untrusted data is directly used as the lhs value
+   in the django.db.models.fields.json.HasKey lookup. However, applications
+   using the jsonfield.has_key lookup with the __ syntax remain unaffected by
+   this issue.
+[1m   CVE-2024-53908[0m
+[1m   For more information about this vulnerability, visit
+   [0mhttps://data.safetycli.com/v/74396/97c[0m
+   To ignore this vulnerability, use PyUp vulnerability id 74396 in safety’s
+   ignore command-line argument or add the ignore to your safety policy file.
+
+
+[31m-> Vulnerability found in django version 1.11.29[0m
+[1m   Vulnerability ID: [0m74395
+[1m   Affected spec: [0m<4.2.17
+[1m   ADVISORY: [0mAffected versions of Django are vulnerable to a
+   potential denial-of-service (DoS) attack in the
+   `django.utils.html.strip_tags()` method. The vulnerability occurs when the
+   `strip_tags()` method or the `striptags` template filter processes inputs
+   containing large sequences of nested, incomplete HTML entities.
+[1m   CVE-2024-53907[0m
+[1m   For more information about this vulnerability, visit
+   [0mhttps://data.safetycli.com/v/74395/97c[0m
+   To ignore this vulnerability, use PyUp vulnerability id 74395 in safety’s
+   ignore command-line argument or add the ignore to your safety policy file.
+
+
+[31m-> Vulnerability found in django version 1.11.29[0m
+[1m   Vulnerability ID: [0m82188
+[1m   Affected spec: [0m<4.2.27
+[1m   ADVISORY: [0mDjango fixes a potential denial-of-service vulnerability
+   in XML ``Deserializer``.
+[1m   CVE-2025-64460[0m
+[1m   For more information about this vulnerability, visit
+   [0mhttps://data.safetycli.com/v/82188/97c[0m
+   To ignore this vulnerability, use PyUp vulnerability id 82188 in safety’s
+   ignore command-line argument or add the ignore to your safety policy file.
+
+
+[31m-> Vulnerability found in django version 1.11.29[0m
+[1m   Vulnerability ID: [0m82187
+[1m   Affected spec: [0m<4.2.27
+[1m   ADVISORY: [0mDjango fixes potential SQL injection in
+   ``FilteredRelation`` column aliases on PostgreSQL.
+[1m   CVE-2025-13372[0m
+[1m   For more information about this vulnerability, visit
+   [0mhttps://data.safetycli.com/v/82187/97c[0m
+   To ignore this vulnerability, use PyUp vulnerability id 82187 in safety’s
+   ignore command-line argument or add the ignore to your safety policy file.
+
+
+[31m-> Vulnerability found in django version 1.11.29[0m
+[1m   Vulnerability ID: [0m72515
+[1m   Affected spec: [0m<4.2.15
+[1m   ADVISORY: [0mDjango addresses a memory exhaustion issue in
+   django.utils.numberformat.floatformat(). When floatformat receives a
+   string representation of a number in scientific notation with a large
+   exponent, it could lead to excessive memory consumption. To prevent this,
+   decimals with more than 200 digits are now returned as-is.
+[1m   CVE-2024-41990[0m
+[1m   For more information about this vulnerability, visit
+   [0mhttps://data.safetycli.com/v/72515/97c[0m
+   To ignore this vulnerability, use PyUp vulnerability id 72515 in safety’s
+   ignore command-line argument or add the ignore to your safety policy file.
+
+
+[31m-> Vulnerability found in django version 1.11.29[0m
+[1m   Vulnerability ID: [0m72521
+[1m   Affected spec: [0m<4.2.15
+[1m   ADVISORY: [0mAffected versions of Django has a potential SQL
+   injection vulnerability in the QuerySet.values() and
+   QuerySet.values_list() methods. When used on models with a JSONField,
+   these methods are susceptible to SQL injection through column aliases if a
+   crafted JSON object key is passed as an argument.
+[1m   CVE-2024-42005[0m
+[1m   For more information about this vulnerability, visit
+   [0mhttps://data.safetycli.com/v/72521/97c[0m
+   To ignore this vulnerability, use PyUp vulnerability id 72521 in safety’s
+   ignore command-line argument or add the ignore to your safety policy file.
+
+
+[31m-> Vulnerability found in django version 1.11.29[0m
+[1m   Vulnerability ID: [0m72520
+[1m   Affected spec: [0m<4.2.15
+[1m   ADVISORY: [0mDjango has a potential denial-of-service vulnerability
+   in django.utils.html.urlize() and AdminURLFieldWidget. The urlize and
+   urlizetrunc functions, along with AdminURLFieldWidget, are vulnerable to
+   denial-of-service attacks when handling inputs with a very large number of
+   Unicode characters.
+[1m   CVE-2024-41991[0m
+[1m   For more information about this vulnerability, visit
+   [0mhttps://data.safetycli.com/v/72520/97c[0m
+   To ignore this vulnerability, use PyUp vulnerability id 72520 in safety’s
+   ignore command-line argument or add the ignore to your safety policy file.
+
+
+[31m-> Vulnerability found in django version 1.11.29[0m
+[1m   Vulnerability ID: [0m40638
+[1m   Affected spec: [0m<2.2.24
+[1m   ADVISORY: [0mDjango 2.2.24, 3.1.12, and 3.2.4 include a fix for
+   CVE-2021-33571: In Django 2.2 before 2.2.24, 3.x before 3.1.12, and 3.2
+   before 3.2.4, URLValidator, validate_ipv4_address, and
+   validate_ipv46_address do not prohibit leading zero characters in octal
+   literals. This may allow a bypass of access control that is based on IP
+   addresses. (validate_ipv4_address and validate_ipv46_address are
+   unaffected with Python
+   3.9.5+).https://www.djangoproject.com/weblog/2021/jun/02/security-releases
+[1m   CVE-2021-33571[0m
+[1m   For more information about this vulnerability, visit
+   [0mhttps://data.safetycli.com/v/40638/97c[0m
+   To ignore this vulnerability, use PyUp vulnerability id 40638 in safety’s
+   ignore command-line argument or add the ignore to your safety policy file.
+
+
+[31m-> Vulnerability found in django version 1.11.29[0m
+[1m   Vulnerability ID: [0m72095
+[1m   Affected spec: [0m<4.2.14
+[1m   ADVISORY: [0mAffected versions of Django are affected by a potential
+   denial-of-service vulnerability in the django.utils.html.urlize()
+   function. The urlize and urlizetrunc template filters were susceptible to
+   a denial-of-service attack via certain inputs containing many brackets. An
+   attacker could exploit this vulnerability to cause significant delays or
+   crashes in the affected application.
+[1m   CVE-2024-38875[0m
+[1m   For more information about this vulnerability, visit
+   [0mhttps://data.safetycli.com/v/72095/97c[0m
+   To ignore this vulnerability, use PyUp vulnerability id 72095 in safety’s
+   ignore command-line argument or add the ignore to your safety policy file.
+
+
+[31m-> Vulnerability found in django version 1.11.29[0m
+[1m   Vulnerability ID: [0m72110
+[1m   Affected spec: [0m<4.2.14
+[1m   ADVISORY: [0mAffected versions of Django are affected by a directory-
+   traversal vulnerability in the Storage.save() method. Derived classes of
+   the django.core.files.storage.Storage base class that overrides the
+   generate_filename() method without replicating the file path validations
+   existing in the parent class could allow for directory traversal via
+   certain inputs when calling save(). This could enable an attacker to
+   manipulate file paths and access unintended directories.
+[1m   CVE-2024-39330[0m
+[1m   For more information about this vulnerability, visit
+   [0mhttps://data.safetycli.com/v/72110/97c[0m
+   To ignore this vulnerability, use PyUp vulnerability id 72110 in safety’s
+   ignore command-line argument or add the ignore to your safety policy file.
+
+
+[31m-> Vulnerability found in django version 1.11.29[0m
+[1m   Vulnerability ID: [0m72111
+[1m   Affected spec: [0m<4.2.14
+[1m   ADVISORY: [0mAffected versions of Django are potentially vulnerable
+   to denial-of-service via the get_supported_language_variant() method. This
+   method was susceptible to a denial-of-service attack when used with very
+   long strings containing specific characters. Exploiting this vulnerability
+   could cause significant delays or crashes in the affected application,
+   potentially leading to service disruption.
+[1m   CVE-2024-39614[0m
+[1m   For more information about this vulnerability, visit
+   [0mhttps://data.safetycli.com/v/72111/97c[0m
+   To ignore this vulnerability, use PyUp vulnerability id 72111 in safety’s
+   ignore command-line argument or add the ignore to your safety policy file.
+
+
+[31m-> Vulnerability found in django version 1.11.29[0m
+[1m   Vulnerability ID: [0m72109
+[1m   Affected spec: [0m<4.2.14
+[1m   ADVISORY: [0mAffected versions of Django are affected by a username
+   enumeration vulnerability caused by timing differences in the
+   django.contrib.auth.backends.ModelBackend.authenticate() method. This
+   method allowed remote attackers to enumerate users through a timing attack
+   involving login requests for users with unusable passwords. The timing
+   difference in the authentication process exposed whether a username was
+   valid or not, potentially aiding attackers in gaining unauthorized access.
+[1m   CVE-2024-39329[0m
+[1m   For more information about this vulnerability, visit
+   [0mhttps://data.safetycli.com/v/72109/97c[0m
+   To ignore this vulnerability, use PyUp vulnerability id 72109 in safety’s
+   ignore command-line argument or add the ignore to your safety policy file.
+
+
+[31m-> Vulnerability found in django version 1.11.29[0m
+[1m   Vulnerability ID: [0m64976
+[1m   Affected spec: [0m<3.2.24
+[1m   ADVISORY: [0mAffected versions of Django are vulnerable to potential
+   denial-of-service in intcomma template filter when used with very long
+   strings.
+[1m   CVE-2024-24680[0m
+[1m   For more information about this vulnerability, visit
+   [0mhttps://data.safetycli.com/v/64976/97c[0m
+   To ignore this vulnerability, use PyUp vulnerability id 64976 in safety’s
+   ignore command-line argument or add the ignore to your safety policy file.
+
+
+[31m-> Vulnerability found in django version 1.11.29[0m
+[1m   Vulnerability ID: [0m51340
+[1m   Affected spec: [0m<3.2.16
+[1m   ADVISORY: [0mIn Django 3.2 before 3.2.16, 4.0 before 4.0.8, and 4.1
+   before 4.1.2, internationalized URLs were subject to a potential denial of
+   service attack via the locale parameter, which is treated as a regular
+   expression.
+[1m   CVE-2022-41323[0m
+[1m   For more information about this vulnerability, visit
+   [0mhttps://data.safetycli.com/v/51340/97c[0m
+   To ignore this vulnerability, use PyUp vulnerability id 51340 in safety’s
+   ignore command-line argument or add the ignore to your safety policy file.
+
+
+[31m-> Vulnerability found in django version 1.11.29[0m
+[1m   Vulnerability ID: [0m38752
+[1m   Affected spec: [0m<2.2.16
+[1m   ADVISORY: [0mAn issue was discovered in Django 2.2 before 2.2.16, 3.0
+   before 3.0.10, and 3.1 before 3.1.1 (when Python 3.7+ is used). The
+   intermediate-level directories of the filesystem cache had the system's
+   standard umask rather than 0o077.
+[1m   CVE-2020-24584[0m
+[1m   For more information about this vulnerability, visit
+   [0mhttps://data.safetycli.com/v/38752/97c[0m
+   To ignore this vulnerability, use PyUp vulnerability id 38752 in safety’s
+   ignore command-line argument or add the ignore to your safety policy file.
+
+
+[31m-> Vulnerability found in django version 1.11.29[0m
+[1m   Vulnerability ID: [0m38749
+[1m   Affected spec: [0m<2.2.16
+[1m   ADVISORY: [0mDjango 2.2.16, 3.0.10 and 3.1.1 include a fix for
+   CVE-2020-24583: An issue was discovered in Django 2.2 before 2.2.16, 3.0
+   before 3.0.10, and 3.1 before 3.1.1 (when Python 3.7+ is used).
+   FILE_UPLOAD_DIRECTORY_PERMISSIONS mode was not applied to intermediate-
+   level directories created in the process of uploading files. It was also
+   not applied to intermediate-level collected static directories when using
+   the collectstatic management command.#NOTE: This vulnerability affects
+   only users of Python versions above
+   3.7.https://www.djangoproject.com/weblog/2020/sep/01/security-releases
+[1m   CVE-2020-24583[0m
+[1m   For more information about this vulnerability, visit
+   [0mhttps://data.safetycli.com/v/38749/97c[0m
+   To ignore this vulnerability, use PyUp vulnerability id 38749 in safety’s
+   ignore command-line argument or add the ignore to your safety policy file.
+
+
++==============================================================================+
+   [32m[1mREMEDIATIONS[0m
+
+  106 vulnerabilities were reported in 9 packages. For detailed remediation & 
+  fix recommendations, upgrade to a commercial license. 
+
++==============================================================================+
+
+ Scan was completed. 106 vulnerabilities were reported. 
+
++==============================================================================+[0m
+
+
+[33m[1m+===========================================================================================================================================================================================+[0m
+
+
+[31m[1mDEPRECATED: [0m[33m[1mthis command (`check`) has been DEPRECATED, and will be unsupported beyond 01 June 2024.[0m
+
+
+[32mWe highly encourage switching to the new [0m[32m[1m`scan`[0m[32m command which is easier to use, more powerful, and can be set up to mimic the deprecated command if required.[0m
+
+
+[33m[1m+===========================================================================================================================================================================================+[0m
+
+

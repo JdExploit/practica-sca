@@ -1,6 +1,5 @@
 # INFORME_PRACTICA1.md
 
-```markdown
 # PRÁCTICA 1: INFORME DE ANÁLISIS SCA (Software Composition Analysis)
 
 **Fecha:** 17 de febrero de 2026
